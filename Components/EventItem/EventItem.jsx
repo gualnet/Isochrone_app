@@ -15,14 +15,14 @@ class EventItem extends React.Component {
   }
 
   render() {
-    // console.log('', this.props.Event)
+    // console.log('RENDER EVENT ITEM', this.props.Event)
     return (
       <View style={styles.eventItem} >
         <TouchableOpacity
           onPress={() => this.navigateToEventDetails()} >
           <Text>EVENT ITEM</Text>
           <Text>ID {this.props.Event.id}</Text>
-          <Text>Event: {this.props.Event.eventName}</Text>
+          <Text>Event: {this.props.Event.name}</Text>
           <Text>Date: {this.props.Event.date}</Text>
         </TouchableOpacity>
       </View>
