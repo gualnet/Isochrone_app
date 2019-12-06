@@ -21,6 +21,7 @@ class EventDetails extends React.Component {
   };
 
   buildParticipantList = (list) => {
+    if (!list) return [];
     const arr = [];
     for (const item of list) {
       arr.push(<Text key={item.id}>{item.name}</Text>);
@@ -46,7 +47,7 @@ class EventDetails extends React.Component {
                 <MapLocation />
               </View>
               <View style={styles.detailsView}>
-                <Text>NAME: {event.eventName}</Text>
+                <Text>NAME: {event.name}</Text>
                 <Text>DATE: {event.date}</Text>
                 <Text>PARTICIPANT: </Text>
                 {arrParticipant}
