@@ -31,7 +31,6 @@ class EventsScreen extends React.Component {
   fetchUsersEvents = async () => {
     try {
       const eventsList = await apiEvents.getAllUserEvents();
-      // console.log('eventsList', eventsList)
       const action = {
         type: 'UPDATE_EVENTS_LIST',
         payload: eventsList,
@@ -53,6 +52,7 @@ class EventsScreen extends React.Component {
   };
 
   async componentDidMount() {
+    // console.log('DID MOUNT EventManager')
     this.setState({
       ...this.state,
       EventsListLoading: true,
@@ -65,6 +65,7 @@ class EventsScreen extends React.Component {
   }
 
   render() {
+    // console.log('RENDER EventManager');
     return (
       <View style={styles.mainView}>
         <View style={styles.topView} >
@@ -77,8 +78,8 @@ class EventsScreen extends React.Component {
         </View>
 
         <View style={styles.middleView}>
-          <EventList navigation={this.props.navigation}/>
-          {this.displayLoading()}
+          {!this.state.EventsListLoading && <EventList navigation={this.props.navigation}/>}
+          {this.state.EventsListLoading && this.displayLoading()}
         </View>
       </View>
     );

@@ -27,24 +27,33 @@ const typeList = [
 class TypesSelection extends React.Component {
 
   navigateToEventsManagement = () => {
-    console.log('navigateToEventsManagement');
+    // console.log('navigateToEventsManagement');
     this.props.navigation.navigate("Events");
   };
 
   createEvent = async () => {
-    console.log('createEvent START');
-    const { eventTypeId, eventSubTypeId, name, participantsList, date } = this.props;
+    try {
+      const { eventTypeId, eventSubTypeId, name, participantsList, date } = this.props;
+      await APIEvent.createEvent({
+        eventTypeId,
+        eventSubTypeId,
+        name,
+        participantsList,
+        date,
+      });
+  
+      const eventsList = await APIEvent.getAllUserEvents();
+      const action = {
+        type: 'UPDATE_EVENTS_LIST',
+        payload: eventsList,
+      }
+      this.props.dispatch(action);
+  
+      this.navigateToEventsManagement();
+    } catch (error) {
+      console.error(error);
+    }
     
-    await APIEvent.createEvent({
-      eventTypeId,
-      eventSubTypeId,
-      name,
-      participantsList,
-      date,
-    });
-
-    this.navigateToEventsManagement();
-    console.log('createEvent END');
   };
 
   render() {
