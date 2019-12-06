@@ -1,0 +1,22 @@
+import * as Device from 'expo-device';
+import { Platform } from 'react-native';
+
+let _HOST;
+if (Device.isDevice || Platform.OS === "android") {
+  // if it's a real device or a web client (Adroid device emulator)
+  _HOST = 'API_SERVER'
+} else {
+  // if it's a simulator (IOS device simulator)
+  _HOST = 'API_SERVER'
+}
+
+const defaultConf = {
+  API_HOST: `${_HOST}`,
+  API_URL: `${_HOST}/api`,
+  Permissions: {
+    Contacts: false,
+    Location: false,
+  },
+};
+
+export default defaultConf;
