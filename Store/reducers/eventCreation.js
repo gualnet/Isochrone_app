@@ -3,8 +3,8 @@ const initialState = {
   name: 'name',
   participantsList: [],
   date: new Date(),
-  event_type_id: undefined,
-  event_sub_type_id: undefined,
+  event_type_id: 1,
+  event_sub_type_id: 1,
 };
 
 const eventCreation = (state = initialState, action) => {

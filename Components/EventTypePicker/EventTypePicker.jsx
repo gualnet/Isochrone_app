@@ -1,44 +1,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Picker } from 'react-native';
+import { Picker, View, ActivityIndicator } from 'react-native';
 
 import style from './EventTypePickerStyle';
 
 class EventTypePicker extends React.Component {
 
   buildTypePickerItems = () => {
-    const typeList = this.props.typeList
+    const types = this.props.types;
     let arr = [];
-    let i = 1;
-    for (const elem of typeList) {
-      arr.push(<Picker.Item key={i} label={elem.type} value={elem.typeId} />)
-      i++;
+    for (const elem of types) {
+      if (elem.typeId && elem.typeId === this.props.chosenType) {
+        // build the subTypes items
+        arr.push(<Picker.Item key={elem.id} label={elem.name} value={elem.id} />)
+      } else if (!elem.typeId) {
+        // build the Types items
+        arr.push(<Picker.Item key={elem.id} label={elem.name} value={elem.id} />)
+      }
     }
     return arr;
   };
 
-  setChosenType = (value) => {
-    const action = {
-      type: 'SET_EVENT_TYPE',
-      payload: value,
-    };
-    this.props.dispatch(action)
-  };
-
-  componentDidMount() {
-    this.setChosenType(this.props.typeList[0].typeId);
-  }
+  
 
   render() {
-    // Set the initial selected value
-    let chosenType = this.props.chosenType ? this.props.chosenType : this.props.typeList[0].type;
-
+    if (!this.props.types) {
+      return (
+        <View>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      );
+    }
     return(
       <Picker
         style={style.picker}
-        key={0}
-        selectedValue={chosenType}
-        onValueChange={(itemValue) => this.setChosenType(itemValue)} >
+        selectedValue={this.props.currentValue}
+        onValueChange={(itemValue) => this.props.setValue(itemValue)} >
         { this.buildTypePickerItems() }
       </Picker>
     );

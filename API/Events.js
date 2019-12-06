@@ -15,33 +15,37 @@ const getAllUserEvents = async () => {
 
 const getEventById = async (eventId) => {
   const response = await axios.get(`${API_URL}/events/${eventId}`);
-  console.log(response);
+  // console.log(response);
   return response;
 };
 
 const createEvent = async (event) => {
   console.log('URL -->',`${API_URL}/events`)
   const response = await axios.post(`${API_URL}/events`, { event });
-  console.log(response);
+  // console.log(response);
   return response;
 };
 
 const updateEvent = async (eventId, event) => {
   const response = await axios.put(`${API_URL}/events/${eventId}`, { event });
-  console.log(response);
+  // console.log(response);
   return response;
 };
 
 const deleteEvent = async (eventId) => {
   const response = await axios.delete(`${API_URL}/events/${eventId}`);
-  console.log(response);
+  // console.log(response);
   return response;
 };
 
 const getEventTypes = async () => {
   const response = await axios.get(`${API_URL}/events/types`);
-  console.log(response);
-  return response;
+  // console.log(response);
+  const list = {
+    types: response.data.event_types,
+    subTypes: response.data.event_sub_types,
+  }
+  return list;
 };
 
 export default {

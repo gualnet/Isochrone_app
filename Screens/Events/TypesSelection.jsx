@@ -3,28 +3,17 @@ import { connect } from 'react-redux';
 import { View, Button } from 'react-native';
 
 import EventTypePicker from '../../Components/EventTypePicker/EventTypePicker';
-import EventSubTypePicker from '../../Components/EventSubTypePicker/EventSubTypePicker';
 import APIEvent from '../../API/Events';
 
 import styles from './TypesSelectionStyle';
 
-const typeList = [
-  {
-    typeId: 0,
-    type: 'XYZ',
-    subType: ['A', 'B', 'C', 'D'],
-  }, {
-    typeId: 2,
-    type: 'Bar',
-    subType: ['WIN_BAR', 'BEER_BAR', 'CHILL', 'OLD_SCHOOL'],
-  }, {
-    typeId: 1,
-    type: 'Restaurant',
-    subType: ['INDIAN', 'SUSHI', 'BURGER', 'MIXICAN'],
-  },
-];
-
 class TypesSelection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      typeList: [],
+    };
+  }
 
   navigateToEventsManagement = () => {
     // console.log('navigateToEventsManagement');
@@ -56,12 +45,58 @@ class TypesSelection extends React.Component {
     
   };
 
+  updateTypeList = async () => {
+    const list = await APIEvent.getEventTypes();
+    this.setState({
+      ...this.state,
+      typeList: list,
+    });
+  };
+
+  async componentDidMount() {
+    await this.updateTypeList();
+  }
+
+  setEventTypeId = (id) => {
+    // set the type bar selected id
+    this.props.dispatch({
+      type: 'SET_EVENT_TYPE',
+      payload: id,
+    })
+    // Here we reset the sub type bar selected id
+    // to the first subType element correspong to the selected type
+    for (const elem of this.state.typeList.subTypes) {
+      if (elem.typeId === id) {
+        this.props.dispatch({
+          type: 'SET_EVENT_SUB_TYPE',
+          payload: elem.id,
+        })
+        break;
+      }
+    }
+  }
+
+  setEventSubTypeId = (id) => {
+    const action = {
+      type: 'SET_EVENT_SUB_TYPE',
+      payload: id,
+    };
+    this.props.dispatch(action)
+  }
+
   render() {
     return (
       <View style={styles.mainView}>
         <View>
-          <EventTypePicker typeList={typeList} />
-          <EventSubTypePicker typeList={typeList} />
+          <EventTypePicker 
+            types={this.state.typeList.types}
+            setValue={this.setEventTypeId}
+            currentValue={this.props.eventTypeId}
+            />
+          <EventTypePicker 
+            types={this.state.typeList.subTypes}
+            setValue={this.setEventSubTypeId}
+            currentValue={this.props.eventSubTypeId} />
         </View>
         <View style={styles.bottomView}>
           <View style={styles.btnContainer}>
