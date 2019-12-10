@@ -1,14 +1,4 @@
-// const colors = {
-//   accent: "#F3534A",
-//   primary: "#180AC4",
-//   secondary: "#4F60D9",
-//   tertiary: "#FFE358",
-//   black: "#323643",
-//   white: "#FFFFFF",
-//   gray: "#9DA3B4",
-//   gray2: "#C5CCD6",
-//   red: "#E80E02",
-// };
+
 const colors = {
   blue: '#1144FF',
   blue2: '#5C7FFE',
@@ -22,9 +12,9 @@ const colors = {
   black2: '#69707F',
   black3: '#8798AD',
   white: '#FFFFFF',
-  gray: '#BFC5D2',
-  gray2: '#F4F6FC',
-  gray3: '#EEF3F5',
+  gray: '#F0F0F0',
+  gray2: '#C8C8C8',
+  gray3: '#A0A0A0',
   caption: '#B0BAC9',
   input: 'rgba(224, 231, 255, 0.20)', // '#E0E7FF' 20%
   border: '#D6DDF6',

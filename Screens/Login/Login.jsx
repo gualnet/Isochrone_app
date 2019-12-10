@@ -6,7 +6,7 @@ import { theme } from '../../libs';
 import styles from './style';
 import SignUp from '../SignUp/SignUp';
 
-const VALID_EMAIL = "SIGNIN@isochrone.fr";
+const VALID_EMAIL = "signin@isochrone.fr";
 const VALID_PASSWORD = "signin";
 
 export default class Login extends Component {
@@ -40,6 +40,13 @@ export default class Login extends Component {
       navigation.navigate("Events");
     }
   }
+
+  setPage = (page) => {
+    this.setState({
+      ...this.state,
+      page,
+    });
+  };
 
   render() {
     const { navigation } = this.props;
@@ -79,7 +86,7 @@ export default class Login extends Component {
                 </Text>
               </Button>
               {/* <Button onPress={() => navigation.navigate('Signup')}> */}
-              <Button onPress={() => this.setState({ page: 'Signup'})}>
+              <Button onPress={() => this.setPage('Signup')}>
                 <Text secondary center >
                   Sign Up
                 </Text>
@@ -89,7 +96,11 @@ export default class Login extends Component {
         </KeyboardAvoidingView>
       )
     } else if (this.state.page === 'Signup') {
-      return (<SignUp />);
+      return (
+        <SignUp
+          navigation={navigation}
+          setPage={this.setPage}/>
+      );
     }
     
   }

@@ -16,14 +16,17 @@ class popIn extends React.Component {
     console.log('parcentage', parcentage);
     Animated.spring(
       this.state.positionBottom,
-      { toValue:  parcentage},
+      { toValue:  0},
     ).start();
   };
 
   render() {
     return (
       <Animated.View
-        style={{ top: this.state.positionBottom }} >
+        style={{ 
+          flex: 1,
+          top: this.state.positionBottom
+        }} >
         { this.props.children }
       </Animated.View>
     );
