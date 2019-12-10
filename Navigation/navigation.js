@@ -13,19 +13,35 @@ import DateSelection from '../Screens/Events/DateSelection';
 import TypesSelection from '../Screens/Events/TypesSelection';
 import PositionSelector from '../Screens/Events/PositioningSelector';
 import EventDetails from '../Screens/EventDetails/EventDetails';
+import Login from '../Screens/Login/Login';
+import Signup from '../Screens/SignUp/SignUp';
 
 
 const HomeStackNavigator = createStackNavigator({
-  Position: { 
-    screen: PositionSelector,
-    navigationOptions: ({navigation}) => ({
-      title: "Position",
-    })
-  },
   Home: { 
     screen: HomeScreen,
     navigationOptions: ({navigation}) => ({
       title: "Home",
+    })
+  },
+  // Position: { 
+  //   screen: PositionSelector,
+  //   navigationOptions: ({navigation}) => ({
+  //     title: "Position",
+  //   })
+  // },
+});
+const SignStackNavigator = createStackNavigator({
+  Login: { 
+    screen: Login,
+    navigationOptions: ({navigation}) => ({
+      // title: "Login",
+    })
+  },
+  Signup: { 
+    screen: Signup,
+    navigationOptions: ({navigation}) => ({
+      // title: "Signup",
     })
   },
 });
@@ -65,6 +81,20 @@ const EventsStackNavigator = createStackNavigator({
 });
 
 const MainTabNavigator = createBottomTabNavigator({
+  Sign: {
+    screen: SignStackNavigator,
+    navigationOptions: () => ({
+      // title: "Sign",
+      // tabBarIcon: () => {
+      //   return (
+      //     // <Image
+      //     //   source={require('../assets/search.png')}
+      //     //   style={style.bottomMenuBarButton}
+      //     // />
+      //   );
+      // }
+    }),
+  },
   Home: {
     screen: HomeStackNavigator,
     navigationOptions: () => ({
