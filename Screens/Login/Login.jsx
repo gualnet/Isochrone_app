@@ -5,9 +5,11 @@ import { Button, Block, Input, Text } from '../../Components';
 import { theme } from '../../libs';
 import styles from './style';
 import SignUp from '../SignUp/SignUp';
+import { isValidEmail, isValidPassword } from '../../libs/helpers';
+import API from '../../API';
 
-const VALID_EMAIL = "signin@isochrone.fr";
-const VALID_PASSWORD = "signin";
+const VALID_EMAIL = "test@isochrone.fr";
+const VALID_PASSWORD = "1234";
 
 export default class Login extends Component {
   state = {
@@ -18,7 +20,7 @@ export default class Login extends Component {
     page: 'Login',
   }
 
-  handleLogin() {
+  handleLogin = async  () => {
     const { navigation } = this.props;
     const { email, password } = this.state;
     const errors = [];
@@ -26,18 +28,31 @@ export default class Login extends Component {
     Keyboard.dismiss();
     this.setState({ loading: true });
 
-    // check with backend API or with some static data
-    if (email !== VALID_EMAIL) {
+    // check localy before sending any request
+    if (!isValidEmail(this.state.email)) {
       errors.push('email');
     }
-    if (password !== VALID_PASSWORD) {
+    if (!isValidPassword(this.state.password)) {
       errors.push('password');
     }
-
-    this.setState({ errors, loading: false });
-
-    if (!errors.length) {
+    
+    if (errors.length) {
+      this.setState({ errors, loading: false });
+    }
+    const response = await API.Users.login({
+      email: this.state.email,
+      password: this.state.password,
+    });
+    if (response.status === 200 && response.data) {
+      // ! set redux user data
       navigation.navigate("Events");
+      this.setState({ errors, loading: false });
+    } else if (response.status === 200 && response.data) {
+      console.log('mauvais email ou mot de passe');
+    } else {
+      console.log('Status', response.status);
+      console.log('Data', response.data);
+      this.setState({ errors: [], loading: false });
     }
   }
 

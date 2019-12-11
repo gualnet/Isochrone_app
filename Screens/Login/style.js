@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   hasErrors: {
-    borderBottomColor: theme.colors.accent,
+    borderBottomColor: theme.colors.red,
+    color: theme.colors.red,
   }
 });
 
