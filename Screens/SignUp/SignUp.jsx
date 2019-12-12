@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Dimensions } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Keyboard } from 'react-native';
 
 import { Button, Block, Input, Text } from '../../Components';
 import { theme } from '../../libs';
 import { PopIn } from '../../Animations/';
+import API from '../../API';
 
 const VALID_LOGIN = "login";
 const VALID_EMAIL = "signup@isochrone.fr";
@@ -20,8 +21,20 @@ class SignUp extends React.Component {
     loading: false,
   };
 
-  handleSignup = () => {
+  handleSignup = async () => {
     console.log('SEND: ', this.state);
+
+    Keyboard.dismiss();
+    this.setState({ loading: true });
+
+    try {
+      const response = await API.Users.register(this.state);
+      console.log('>>STATUS', response.status);
+      console.log('>>DATA', response.data);
+    } catch (error) {
+      console.error(error);
+    }
+
   };
 
   render() {

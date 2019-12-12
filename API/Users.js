@@ -7,15 +7,27 @@ const login = async (data) => {
   const { email, password } = data;
   try {
     const response = await axios.post(`${API_URL}/users/login`, { email, password });
-
-    // console.log('\nresponse', response.status);
-    // console.log('\nresponse', response.data);
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+  }
+};
+
+const register = async (data) => {
+  const { login, email, phoneNumber, password } = data;
+  try {
+    return await axios.post(`${API_URL}/users/register`, {
+      login,
+      email,
+      phoneNumber,
+      password,
+    });
+  } catch (error) {
+    console.error(error);
   }
 };
 
 export default {
   login,
+  register,
 };

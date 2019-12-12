@@ -20,7 +20,7 @@ export default class Login extends Component {
     page: 'Login',
   }
 
-  handleLogin = async  () => {
+  handleLogin = async () => {
     const { navigation } = this.props;
     const { email, password } = this.state;
     const errors = [];
@@ -35,20 +35,22 @@ export default class Login extends Component {
     if (!isValidPassword(this.state.password)) {
       errors.push('password');
     }
-    
     if (errors.length) {
       this.setState({ errors, loading: false });
     }
+    // Send login data to the server
     const response = await API.Users.login({
       email: this.state.email,
       password: this.state.password,
     });
+    // handle api response
     if (response.status === 200 && response.data) {
-      // ! set redux user data
       navigation.navigate("Events");
       this.setState({ errors, loading: false });
     } else if (response.status === 200 && response.data) {
       console.log('mauvais email ou mot de passe');
+      errors.push('email');
+      errors.push('password');
     } else {
       console.log('Status', response.status);
       console.log('Data', response.data);
