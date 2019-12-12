@@ -45,7 +45,7 @@ export default class Login extends Component {
     });
     // handle api response
     if (response.status === 200 && response.data) {
-      navigation.navigate("Events");
+      navigation.navigate("Home");
       this.setState({ errors, loading: false });
     } else if (response.status === 200 && response.data) {
       console.log('mauvais email ou mot de passe');
