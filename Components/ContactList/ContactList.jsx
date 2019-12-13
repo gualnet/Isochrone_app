@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as Contacts from 'expo-contacts';
-import * as Permissions from 'expo-permissions';
+// import * as Permissions from 'expo-permissions';
 import { Text, View, FlatList, TouchableOpacity, Switch } from 'react-native';
 
+import API from '../../API';
 import config from '../../config/config';
 import style from './style';
 
@@ -11,6 +12,7 @@ class ContactList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      registeredContact: [],
       contact: [],
     };
   };
@@ -25,9 +27,18 @@ class ContactList extends React.Component {
         Contacts.Fields.PhoneNumbers
       ],
     });
+
+    // sendContactsToApi
+    const response = await API.Users.checkContactList(data);
+    const identifiedContactsList = response.data;
+
+
     this.setState({
       ...this.state,
-      contact: data,
+      contact: [
+        ...identifiedContactsList,
+        ...data
+      ],
     })
 
   };
@@ -56,17 +67,16 @@ class ContactList extends React.Component {
     return (
       <View style={style.contactItem}>
         <TouchableOpacity onPress={this.addToContactSelection}>
-          <Text>{item.name}</Text>
+          <Text>{item.firstName} {item.lastName}</Text>
+          { item.phoneNumbers && item.phoneNumbers[0] && <Text>{item.phoneNumbers[0].number}</Text> }
+          { (!item || !item.phoneNumbers || !item.phoneNumbers[0]) && <Text>Pas de numero</Text> }
           {
-            item.phoneNumbers && item.phoneNumbers[0] && <Text>{item.phoneNumbers[0].number}</Text>
+            item.createdAt &&
+            <Switch
+              value={isSelect}
+              onValueChange={(e) => this.addToContactSelection(e, item)}
+              ></Switch>
           }
-          {
-            (!item || !item.phoneNumbers || !item.phoneNumbers[0]) && <Text>Pas de numero</Text>
-          }
-          <Switch
-            value={isSelect}
-            onValueChange={(e) => this.addToContactSelection(e, item)}
-            ></Switch>
         </TouchableOpacity>
       </View>
     );
