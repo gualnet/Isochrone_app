@@ -27,7 +27,18 @@ const register = async (data) => {
   }
 };
 
+const checkContactList = async (rawContactList) => {
+  try {
+    
+    const response = await axios.post(`${API_URL}/users/contacts`, rawContactList);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export default {
   login,
   register,
+  checkContactList,
 };
