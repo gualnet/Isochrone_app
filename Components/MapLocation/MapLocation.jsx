@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
-import { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { StyleSheet } from 'react-native';
+import { Marker } from 'react-native-maps';
 
 import config from '../../config/config';
-import styles from './style';
+import { theme } from '../../libs';
 
 class MapLocation extends React.Component {
 
@@ -38,6 +39,7 @@ class MapLocation extends React.Component {
 
   render() {
     const userLocation = this.props.userLocation;
+    console.log('userLocation', userLocation);
     return (
       userLocation.latitude && userLocation.longitude &&
       <MapView style={styles.mapStyle}
@@ -69,3 +71,11 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(MapLocation);
+
+
+const styles = StyleSheet.create({
+  mapStyle: {
+    width: '100%',
+    height: '100%',
+  },
+});

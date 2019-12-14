@@ -14,7 +14,12 @@ const getAllUserEvents = async () => {
 };
 
 const getEventById = async (eventId) => {
-  const response = await axios.get(`${API_URL}/events/${eventId}`);
+  try {
+    const response = await axios.get(`${API_URL}/events/${eventId}`);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
   // console.log(response);
   return response;
 };

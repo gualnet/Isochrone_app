@@ -1,12 +1,19 @@
 import React from 'react';
 import { Button, Text, SafeAreaView, View } from 'react-native';
 
+import API from '../../API'
 import MapLocation from '../../Components/MapLocation/MapLocation';
 import FadIn from '../../Animations/FadIn';
 
 import styles from './EventDetailsStyles';
 
 class EventDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      event: props.navigation.state.params.Event,
+    }
+  }
 
   navigateToEventStyleSelectionScreen = () => {
     this.props.navigation.navigate("Events");
@@ -28,6 +35,19 @@ class EventDetails extends React.Component {
     };
     return arr;
   };
+
+  async componentDidMount() {
+    try {
+      const response = await API.Events.getEventById(this.state.event.id);
+      // console.log('getEventById status:', response.status);
+      if (response.status === 200) {
+        // console.log('RESPONSE data', response.data);
+        this.setState({ event: response.data });
+      }
+    } catch (error) {
+      console.error
+    }
+  }
 
   render() {
     // console.log('state-->', this.props.navigation.state.params)

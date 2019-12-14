@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 import * as Location from 'expo-location';
 
@@ -26,6 +27,17 @@ class HomeScreen extends React.Component {
     let location = await Location.getCurrentPositionAsync({});
     console.log('location', location);
 
+    this.props.dispatch({
+      type: 'SET_LOCATION',
+      payload: {
+        country: null,
+        city: null,
+        longitude: location.coords.longitude,
+        latitude: location.coords.latitude,
+      },
+    });
+
+
     // ask the user for the permissions
     await MyPermissions.Contact();
     // get the permissions status in the config object
@@ -50,4 +62,8 @@ class HomeScreen extends React.Component {
   };
 };
 
-export default HomeScreen;
+const mapStateToProps = (state) => {
+  return {};
+};
+
+export default connect(mapStateToProps)(HomeScreen);
