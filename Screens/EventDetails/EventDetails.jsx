@@ -61,9 +61,9 @@ class EventDetails extends React.Component {
       <SafeAreaView style={styles.mainView}>
         <FadIn>
           {/* <View> */}
-            <View style={styles.topView}>
+            {/* <View style={styles.topView}>
               <Text>EVENT DETAILS SCREEN</Text>
-            </View>
+            </View> */}
 
             <View style={styles.middleView}>
               <View style={styles.mapView}>
