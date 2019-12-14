@@ -39,16 +39,20 @@ class MapLocation extends React.Component {
     const markerArray = [];
     let random;
     for (participant of participantsList) {
-      random = (Math.floor(Math.random() * 5000) + 500) / 10000;
+      randomLat = (Math.floor(Math.random() * 5000) + 500) / 100000;
+      randomLon = (Math.floor(Math.random() * 5000) + 500) / 100000;
       if (Math.floor(Math.random() * 2) === 1) {
-        random *= -1;
+        randomLat *= -1;
       }
-      console.log('RANDOM', random);
+      if (Math.floor(Math.random() * 2) === 1) {
+        randomLon *= -1;
+      }
+      console.log('RANDOM', randomLat, randomLon);
       markerArray.push(
-        <Marker
+        <Marker key={participant.id}
           coordinate={{
-            latitude: userLocation.latitude + random,
-            longitude: userLocation.longitude + random,
+            latitude: userLocation.latitude + randomLat,
+            longitude: userLocation.longitude + randomLon,
           }}
           title={participant.firstName}
           description={`Position de ${participant.firstName}`}
@@ -62,12 +66,16 @@ class MapLocation extends React.Component {
     if (this.props.locationPermissons){
       await this.setLocation();
     }
-  }
+  };
   async componentDidUpdate(previousProps) {
-    if (this.props.locationPermissons && previousProps.locationPermissons === false){
+    if (this.props.locationPermissons && previousProps.locationPermissons === false) {
       await this.setLocation();
     }
-  }
+    if (this.props.event !== previousProps.event) {
+      // console.log('\n\n FORCE UPDATE\n', this.props.event);
+      this.setState({ event: this.props.event })
+    }
+  };
 
   render() {
     console.log('\n\nRENDER MAP LOCATION', this.state)
@@ -79,8 +87,8 @@ class MapLocation extends React.Component {
         initialRegion={{
           latitude: userLocation.latitude,
           longitude: userLocation.longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+          latitudeDelta: 0.09,
+          longitudeDelta: 0.09,
         }}
       >
         <Marker
