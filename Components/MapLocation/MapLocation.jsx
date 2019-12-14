@@ -9,7 +9,12 @@ import config from '../../config/config';
 import { theme } from '../../libs';
 
 class MapLocation extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      event: props.event,
+    }
+  }
   setLocation = async () => {
     if (!config.Permissions.Location) return;
 
@@ -26,6 +31,33 @@ class MapLocation extends React.Component {
     this.props.dispatch(action);
   };
 
+  buildParticipantMarkers = () => {
+    console.log('buildParticipantMarkers', this.state);
+    const { participantsList } = this.state.event;
+    const userLocation = this.props.userLocation;
+    if (!participantsList) return [];
+    const markerArray = [];
+    let random;
+    for (participant of participantsList) {
+      random = (Math.floor(Math.random() * 5000) + 500) / 10000;
+      if (Math.floor(Math.random() * 2) === 1) {
+        random *= -1;
+      }
+      console.log('RANDOM', random);
+      markerArray.push(
+        <Marker
+          coordinate={{
+            latitude: userLocation.latitude + random,
+            longitude: userLocation.longitude + random,
+          }}
+          title={participant.firstName}
+          description={`Position de ${participant.firstName}`}
+        />
+      );
+    }
+    return markerArray;
+  };
+
   async componentDidMount() {
     if (this.props.locationPermissons){
       await this.setLocation();
@@ -38,8 +70,9 @@ class MapLocation extends React.Component {
   }
 
   render() {
+    console.log('\n\nRENDER MAP LOCATION', this.state)
     const userLocation = this.props.userLocation;
-    console.log('userLocation', userLocation);
+    // console.log('userLocation', userLocation);
     return (
       userLocation.latitude && userLocation.longitude &&
       <MapView style={styles.mapStyle}
@@ -53,11 +86,12 @@ class MapLocation extends React.Component {
         <Marker
           coordinate={{
             latitude: userLocation.latitude,
-            longitude: userLocation.longitude
+            longitude: userLocation.longitude,
           }}
-          title='Moi'
+          title='moi'
           description='ma position'
         />
+        {this.buildParticipantMarkers()}
       </MapView>
     );
   };

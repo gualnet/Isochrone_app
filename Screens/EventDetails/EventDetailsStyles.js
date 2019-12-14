@@ -5,14 +5,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   topView: {
     backgroundColor: 'green',
   },
   middleView: {
     height: '90%',
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
   },
   bottomView: {
     flexDirection: 'row',
