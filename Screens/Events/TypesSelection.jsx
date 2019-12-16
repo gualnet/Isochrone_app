@@ -22,6 +22,7 @@ class TypesSelection extends React.Component {
 
   createEvent = async () => {
     try {
+      console.log('PROPS', this.props);
       const { eventTypeId, eventSubTypeId, name, participantsList, date } = this.props;
       await APIEvent.createEvent({
         eventTypeId,
@@ -29,6 +30,8 @@ class TypesSelection extends React.Component {
         name,
         participantsList,
         date,
+        longitude: this.props.userLocation.longitude,
+        latitude: this.props.userLocation.latitude,
       });
   
       const eventsList = await APIEvent.getAllUserEvents();
@@ -116,6 +119,7 @@ const mapStateToProps = (state) => {
     name: state.eventCreationReducer.name,
     participantsList: state.eventCreationReducer.participantsList,
     date: state.eventCreationReducer.date,
+    userLocation: state.userInfoReducer.location,
   };
 };
 
