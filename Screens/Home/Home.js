@@ -25,7 +25,7 @@ class HomeScreen extends React.Component {
     };
     // Get the location status
     let location = await Location.getCurrentPositionAsync({});
-    console.log('location', location);
+    // console.log('location', location);
 
     this.props.dispatch({
       type: 'SET_LOCATION',
