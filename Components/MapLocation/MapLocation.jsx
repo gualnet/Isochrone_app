@@ -56,6 +56,7 @@ class MapLocation extends React.Component {
       await this.setLocation();
     }
   };
+  
   async componentDidUpdate(previousProps) {
     if (this.props.locationPermissons && previousProps.locationPermissons === false) {
       await this.setLocation();
@@ -67,7 +68,7 @@ class MapLocation extends React.Component {
   };
 
   render() {
-    console.log('\n\nRENDER MAP LOCATION', this.state)
+    // console.log('\n\nRENDER MAP LOCATION', this.state)
     const userLocation = this.props.userLocation;
     // console.log('userLocation', userLocation);
     return (
