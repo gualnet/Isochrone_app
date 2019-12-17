@@ -68,9 +68,7 @@ class MapLocation extends React.Component {
   };
 
   render() {
-    // console.log('\n\nRENDER MAP LOCATION', this.state)
     const userLocation = this.props.userLocation;
-    // console.log('userLocation', userLocation);
     return (
       userLocation.latitude && userLocation.longitude &&
       <MapView style={styles.mapStyle}
