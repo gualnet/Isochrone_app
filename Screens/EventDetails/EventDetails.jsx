@@ -37,26 +37,36 @@ class EventDetails extends React.Component {
     return arr;
   };
 
-    async componentDidMount() {
+  updateStateEventDetails = async ()  => {
     try {
-      const response = await API.Events.getEventById(this.state.event.id);
-      console.log('\ngetEventById status:', response.status);
+      const response = await API.Events.getEventById(this.props.navigation.state.params.Event.id);
+      // console.log('\ngetEventById status:', response.status);
       if (response.status === 200) {
-        console.log('RESPONSE data', response.data);
+        // console.log('RESPONSE data', response.data);
         this.setState({ event: response.data });
       } else {
-        console.error('getEventById status:', response.status);
+        // console.error('getEventById status:', response.status);
         this.props.navigation.navigate("Events");
         return;
       }
     } catch (error) {
       console.error
     }
+  };
+
+  async componentDidMount() {
+    await this.updateStateEventDetails();
+  }
+
+  async componentDidUpdate(previousProps) {
+    // console.log('this.props', this.props);
+    if (previousProps.navigation.state.params.Event.id !== this.props.navigation.state.params.Event.id) {
+      await this.updateStateEventDetails();
+    }
   }
 
   render() {
     const { event } = this.state;
-    console.log('\n\nRENDER EVENT DETAILS', this.state);
     return (
       <SafeAreaView style={styles.mainView}>
         <FadIn>
@@ -70,6 +80,7 @@ class EventDetails extends React.Component {
                 <MapLocation event={this.state.event}/>
               </View>
               <View style={styles.detailsView}>
+                <Text>ID: {event.id}</Text>
                 <Text>NAME: {event.name}</Text>
                 <Text>DATE: {event.date}</Text>
                 <Text>PARTICIPANT: </Text>
