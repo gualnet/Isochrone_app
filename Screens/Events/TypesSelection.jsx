@@ -30,8 +30,8 @@ class TypesSelection extends React.Component {
         name,
         participantsList,
         date,
-        longitude: this.props.userLocation.longitude,
-        latitude: this.props.userLocation.latitude,
+        longitude: `${this.props.userLocation.longitude}`,
+        latitude: `${this.props.userLocation.latitude}`,
       });
   
       const eventsList = await APIEvent.getAllUserEvents();

@@ -32,7 +32,7 @@ class MapLocation extends React.Component {
   };
 
   buildParticipantMarkers = () => {
-    console.log('buildParticipantMarkers', this.state);
+    // console.log('buildParticipantMarkers', this.state);
     const { participantsList } = this.state.event;
     const userLocation = this.props.userLocation;
     if (!participantsList) return [];
