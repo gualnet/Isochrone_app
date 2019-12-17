@@ -34,25 +34,14 @@ class MapLocation extends React.Component {
   buildParticipantMarkers = () => {
     // console.log('buildParticipantMarkers', this.state);
     const { participantsList } = this.state.event;
-    const userLocation = this.props.userLocation;
     if (!participantsList) return [];
     const markerArray = [];
-    let random;
     for (participant of participantsList) {
-      randomLat = (Math.floor(Math.random() * 5000) + 500) / 100000;
-      randomLon = (Math.floor(Math.random() * 5000) + 500) / 100000;
-      if (Math.floor(Math.random() * 2) === 1) {
-        randomLat *= -1;
-      }
-      if (Math.floor(Math.random() * 2) === 1) {
-        randomLon *= -1;
-      }
-      console.log('RANDOM', randomLat, randomLon);
       markerArray.push(
         <Marker key={participant.id}
           coordinate={{
-            latitude: userLocation.latitude + randomLat,
-            longitude: userLocation.longitude + randomLon,
+            latitude: Number(participant.latitude),
+            longitude: Number(participant.longitude),
           }}
           title={participant.firstName}
           description={`Position de ${participant.firstName}`}
