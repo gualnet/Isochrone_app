@@ -9,5 +9,7 @@ const mainReducers = combineReducers({
   userInfoReducer,
 });
 
-export default createStore(mainReducers);
+const store = createStore(mainReducers);
+
+export default store;
 

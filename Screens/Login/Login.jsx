@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { ActivityIndicator, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { ActivityIndicator, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native';
 
 import { Button, Block, Input, Text } from '../../Components';
 import { theme } from '../../libs';
@@ -11,7 +12,7 @@ import API from '../../API';
 const VALID_EMAIL = "test@isochrone.fr";
 const VALID_PASSWORD = "1234";
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     email: VALID_EMAIL,
     password: VALID_PASSWORD,
@@ -45,8 +46,14 @@ export default class Login extends Component {
     });
     // handle api response
     if (response.status === 200 && response.data) {
-      navigation.navigate("Home");
+      console.log('\nLOGIN RESPONSE', response.data);
+
+      this.props.dispatch({
+        type: 'SET_LOGIN_DATA',
+        payload: response.data,
+      });
       this.setState({ errors, loading: false });
+      navigation.navigate("Home");
     } else if (response.status === 200 && response.data) {
       console.log('mauvais email ou mot de passe');
       errors.push('email');
@@ -122,3 +129,10 @@ export default class Login extends Component {
     
   }
 };
+
+
+const mapStateToProps = (state) => {
+  return {};
+};
+
+export default connect(mapStateToProps)(Login);

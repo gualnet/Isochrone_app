@@ -53,17 +53,24 @@ class HomeScreen extends React.Component {
   }
 
   render() {
+    const id = this.props.userData.id ? this.props.userData.id : 'None'
+    const firstName = this.props.userData.firstName ? this.props.userData.firstName : 'None'
+    const lastName = this.props.userData.lastName ? this.props.userData.lastName : 'None'
     return (
       <View style={styles.container}>
         <Text>FIND YOUR BAR</Text>
         <Text>COUCOU !</Text>
+        <Text>USER ID: {id}</Text>
+        <Text>USER NAME:{firstName} {lastName}</Text>
       </View>
     );
   };
 };
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    userData: state.userInfoReducer,
+  };
 };
 
 export default connect(mapStateToProps)(HomeScreen);
