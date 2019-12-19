@@ -61,7 +61,12 @@ class Login extends Component {
     } else {
       console.log('Status', response.status);
       console.log('Data', response.data);
-      this.setState({ errors: [], loading: false });
+      this.setState({ 
+        errors: ['rejected'],
+        loading: false,
+        email: '',
+        password: '',
+      });
     }
   }
 
@@ -81,6 +86,12 @@ class Login extends Component {
         <KeyboardAvoidingView style={styles.login} behavior="padding">
           <Block padding={[0, theme.sizes.base * 2]}>
             <Text h1 bold>Login</Text>
+            {
+              this.state.errors[0] === 'rejected' && 
+              <Text 
+                error={hasErrors('rejected')}
+                style={[styles.input, hasErrors('rejected')]}
+              >LOGIN REJECTED</Text>}
             <Block middle>
               <Input
                 label="Email"

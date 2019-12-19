@@ -1,18 +1,30 @@
 import axios from 'axios';
 import config from '../config/config';
+import store from '../Store/configStore';
 
 const API_URL = config.API_URL;
 
+/**
+ * Get all events related to the user
+ */
 const getAllUserEvents = async () => {
   try {
-    const response = await axios.get(`${API_URL}/events`);
-    return response.data
+    const userToken = store.getState().userInfoReducer.token;
+    // const response = await axios.get(`${API_URL}/events/${userToken}`);
+    const response = await axios({
+      url: `${API_URL}/events/${userToken}`,
+      headers: {'Authorization': `Bearer ${userToken}`},
+    });
+    return response.data;
   } catch (error) {
     console.log(error)
     return [];
   }
 };
 
+/**
+ * Get info of the (eventId) event
+ */
 const getEventById = async (eventId) => {
   try {
     const response = await axios.get(`${API_URL}/events/${eventId}`);
