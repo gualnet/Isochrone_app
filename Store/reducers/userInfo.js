@@ -1,13 +1,19 @@
 
 const initialState = {
+  createdAt: null,
+  email: null,
+  firstName: null,
   id: null,
-  name: null,
+  lastName: null,
+  localisation: null,
   location: {
-    country: null,
     city: null,
-    longitude: null,
+    country: null,
     latitude: null,
+    longitude: null,
   },
+  phoneNumber: null,
+  token: null,
 };
 
 const userInfo = (state = initialState, action) => {
@@ -16,6 +22,12 @@ const userInfo = (state = initialState, action) => {
 
   switch (action.type) {
     
+    case "SET_LOGIN_DATA":
+      nextState = {
+        ...nextState,
+        ...action.payload,
+      };
+      return nextState;
     /**
      * Set the location
      * Payload = { country, city, longitude, latitude }
