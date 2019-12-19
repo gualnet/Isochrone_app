@@ -12,7 +12,7 @@ const getAllUserEvents = async () => {
     const userToken = store.getState().userInfoReducer.token;
     // const response = await axios.get(`${API_URL}/events/${userToken}`);
     const response = await axios({
-      url: `${API_URL}/events/${userToken}`,
+      url: `${API_URL}/events`,
       headers: {'Authorization': `Bearer ${userToken}`},
     });
     return response.data;

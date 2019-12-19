@@ -2,8 +2,9 @@ import React from 'react';
 import { Button, Text, SafeAreaView, View } from 'react-native';
 
 import API from '../../API'
-import MapLocation from '../../Components/MapLocation/MapLocation';
 import FadIn from '../../Animations/FadIn';
+import store from '../../Store/configStore';
+import MapLocation from '../../Components/MapLocation/MapLocation';
 
 import styles from './EventDetailsStyles';
 
@@ -12,6 +13,7 @@ class EventDetails extends React.Component {
     super(props);
     this.state = {
       event: props.navigation.state.params.Event,
+      myEventData: {},
     }
   }
 
@@ -40,10 +42,17 @@ class EventDetails extends React.Component {
   updateStateEventDetails = async ()  => {
     try {
       const response = await API.Events.getEventById(this.props.navigation.state.params.Event.id);
-      // console.log('\ngetEventById status:', response.status);
+      let myEventData = {};
       if (response.status === 200) {
-        // console.log('RESPONSE data', response.data);
-        this.setState({ event: response.data });
+        for (elem of response.data.participantsList) {
+          if (elem.id === store.getState().userInfoReducer.id) {
+            myEventData = response.data.user;
+          }
+        }
+        this.setState({
+          event: response.data,
+          myEventData,
+        });
       } else {
         // console.error('getEventById status:', response.status);
         this.props.navigation.navigate("Events");
@@ -66,7 +75,9 @@ class EventDetails extends React.Component {
   }
 
   render() {
-    const { event } = this.state;
+    const { event, myEventData } = this.state;
+    // console.log('EVENT', event)
+    // console.log('MYDATA', myEventData)
     return (
       <SafeAreaView style={styles.mainView}>
         <FadIn>
@@ -83,6 +94,7 @@ class EventDetails extends React.Component {
                 <Text>ID: {event.id}</Text>
                 <Text>NAME: {event.name}</Text>
                 <Text>DATE: {event.date}</Text>
+                {/* <Text>MY POSITION: {event.date}</Text> */}
                 <Text>PARTICIPANT: </Text>
                 {this.buildParticipantList()}
               </View>

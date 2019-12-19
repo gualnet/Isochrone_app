@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, Button } from 'react-native';
+import { View, Button } from 'react-native';
 import apiEvents from '../../API/Events';
 
 import EventList from '../../Components/EventsList/EventsList';
@@ -85,7 +85,6 @@ class EventsScreen extends React.Component {
     );
   };
 };
-
 
 const mapStateToProps = (state) => {
   return {
