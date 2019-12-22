@@ -13,6 +13,7 @@ class MapLocation extends React.Component {
     super(props);
     this.state = {
       event: props.event,
+      myEventData: props.myEventData,
     }
   }
   setLocation = async () => {
@@ -37,16 +38,30 @@ class MapLocation extends React.Component {
     if (!participantsList) return [];
     const markerArray = [];
     for (participant of participantsList) {
-      markerArray.push(
-        <Marker key={participant.id}
-          coordinate={{
-            latitude: Number(participant.latitude),
-            longitude: Number(participant.longitude),
-          }}
-          title={participant.firstName}
-          description={`Position de ${participant.firstName}`}
-        />
-      );
+      if (participant.id === this.state.myEventData.id) {
+        markerArray.push(
+          <Marker key={participant.id}
+            coordinate={{
+              latitude: Number(participant.latitude),
+              longitude: Number(participant.longitude),
+            }}
+            title={participant.firstName}
+            description='Ma postion'
+            pinColor='blue'
+          />
+        );
+      } else {
+        markerArray.push(
+          <Marker key={participant.id}
+            coordinate={{
+              latitude: Number(participant.latitude),
+              longitude: Number(participant.longitude),
+            }}
+            title={participant.firstName}
+            description={`Position de ${participant.firstName}`}
+          />
+        );
+      }
     }
     return markerArray;
   };
@@ -67,6 +82,15 @@ class MapLocation extends React.Component {
     }
   };
 
+  componentDidUpdate(previousProps) {
+    if (previousProps.myEventData !== this.props.myEventData) {
+      this.setState({ myEventData: this.props.myEventData });
+    }
+    if (previousProps.event !== this.props.event) {
+      this.setState({ event: this.props.event });
+    }
+  };
+
   render() {
     const userLocation = this.props.userLocation;
     return (
@@ -79,14 +103,6 @@ class MapLocation extends React.Component {
           longitudeDelta: 0.09,
         }}
       >
-        <Marker
-          coordinate={{
-            latitude: userLocation.latitude,
-            longitude: userLocation.longitude,
-          }}
-          title='moi'
-          description='ma position'
-        />
         {this.buildParticipantMarkers()}
       </MapView>
     );

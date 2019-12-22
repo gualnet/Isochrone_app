@@ -46,7 +46,8 @@ class EventDetails extends React.Component {
       if (response.status === 200) {
         for (elem of response.data.participantsList) {
           if (elem.id === store.getState().userInfoReducer.id) {
-            myEventData = response.data.user;
+            myEventData = elem;
+            break;
           }
         }
         this.setState({
@@ -54,7 +55,6 @@ class EventDetails extends React.Component {
           myEventData,
         });
       } else {
-        // console.error('getEventById status:', response.status);
         this.props.navigation.navigate("Events");
         return;
       }
@@ -88,7 +88,9 @@ class EventDetails extends React.Component {
 
             <View style={styles.middleView}>
               <View style={styles.mapView}>
-                <MapLocation event={this.state.event}/>
+                <MapLocation 
+                  event={this.state.event}
+                  myEventData={this.state.myEventData} />
               </View>
               <View style={styles.detailsView}>
                 <Text>ID: {event.id}</Text>

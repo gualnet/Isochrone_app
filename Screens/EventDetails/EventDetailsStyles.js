@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   mapView: {
     width: '100%',
-    height: '30%',
+    height: '50%',
   },
   detailsView: {
     marginTop: 10,
