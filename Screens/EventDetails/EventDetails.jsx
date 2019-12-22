@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Text, SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
+import { Button, Text } from '../../Components';
 import API from '../../API'
 import FadIn from '../../Animations/FadIn';
 import store from '../../Store/configStore';
@@ -27,6 +28,10 @@ class EventDetails extends React.Component {
 
   handleReturnClick = () => {
     this.navigateToEventStyleSelectionScreen();
+  };
+
+  recommandationClick = () => {
+    this.props.navigation.navigate("Recommandation", { event: this.state.event });
   };
 
   buildParticipantList = () => {
@@ -99,16 +104,23 @@ class EventDetails extends React.Component {
                 {/* <Text>MY POSITION: {event.date}</Text> */}
                 <Text>PARTICIPANT: </Text>
                 {this.buildParticipantList()}
+
               </View>
             </View>
+            <View style={styles.recoBtnView}>
+              <View style={styles.btnContainer}>
+                <Button gradient onPress={() => this.recommandationClick()}><Text primary gray center>RECOMMANDATION</Text></Button>
+              </View>
+            </View>
+            
 
             <View style={styles.bottomView}>
               <View style={styles.bottomBtnView}>
                 <View style={styles.btnContainer}>
-                  <Button title='Valider' onPress={() => this.handleValidationClick()}></Button>
+                  <Button gradient onPress={() => this.handleValidationClick()}><Text primary grZy center>Valider</Text></Button>
                 </View>
                 <View style={styles.btnContainer}>
-                  <Button title='Retour' onPress={() => this.handleReturnClick()} ></Button>
+                  <Button gradient onPress={() => this.handleReturnClick()} ><Text secondary white center>Retour</Text></Button>
                 </View>
               </View>
             </View>

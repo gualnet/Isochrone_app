@@ -5,29 +5,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    // backgroundColor: 'red',
-  },
-  topView: {
-    backgroundColor: 'green',
   },
   middleView: {
-    height: '90%',
-    // backgroundColor: 'blue',
+    height: '80%',
   },
   bottomView: {
+    height: '10%',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: "space-around",
-    // position: 'absolute',
-    // bottom: 150,
-    width: '100%',
-    backgroundColor: 'yellow',
   },
   bottomBtnView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'flex-end',
-    // position: 'absolute',
-    // bottom: 100,
   },
   btnContainer: {
     width: '40%',
@@ -44,7 +35,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginRight: 10,
     marginLeft: 10,
-  }
+  },
+  recoBtnView: {
+    height: '10%',
+    width: '100%',
+  },
 });
 
 export default styles;

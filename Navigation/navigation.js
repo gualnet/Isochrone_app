@@ -15,6 +15,7 @@ import PositionSelector from '../Screens/Events/PositioningSelector';
 import EventDetails from '../Screens/EventDetails/EventDetails';
 import Login from '../Screens/Login/Login';
 import Signup from '../Screens/SignUp/SignUp';
+import Recommandation from '../Screens/Recommandation/Recommandation';
 
 
 const HomeStackNavigator = createStackNavigator({
@@ -75,7 +76,19 @@ const EventsStackNavigator = createStackNavigator({
     screen: TypesSelection,
     navigationOptions: ({navigation}) => ({
       title: "Style",
-    })
+    }),
+  },
+  EventDetails: {
+    screen: EventDetails,
+    navigationOptions: ({navigation}) => ({
+      title: "EventDetails",
+    }),
+  },
+  Recommandation: {
+    screen: Recommandation,
+    navigationOptions: ({navigation}) => ({
+      title: "Recommandation",
+    }),
   },
   
 });
