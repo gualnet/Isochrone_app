@@ -3,13 +3,23 @@ import { StyleSheet, SafeAreaView, View } from 'react-native';
 import MapView from 'react-native-maps';
 
 import { Text } from '../../Components';
+import API from '../../API';
 import { theme } from '../../libs/';
 
 class Recommandation extends React.Component {
 
-  fetchRecommandations = async () => {
-    
+  fetchRecommandations = async (event) => {
+    try {
+      const response = await API.Events.getRecommandations(event);
+      console.log('RESPONSE', response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  async componentDidMount() {
+    await this.fetchRecommandations(this.props.navigation.state.params.event);
+  }
   
   render() {
     console.log('...', this.props.navigation.state.params.event)

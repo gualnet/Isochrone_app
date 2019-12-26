@@ -65,6 +65,15 @@ const getEventTypes = async () => {
   return list;
 };
 
+const getRecommandations = async (event) => {
+  const response = await axios({
+    method: 'POST',
+    url: `${API_URL}/external/poi`,
+    data: { event },
+  });
+  return response;
+};
+
 export default {
   getAllUserEvents,
   getEventById,
@@ -72,4 +81,5 @@ export default {
   updateEvent,
   deleteEvent,
   getEventTypes,
+  getRecommandations,
 };
