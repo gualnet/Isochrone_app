@@ -56,12 +56,14 @@ class HomeScreen extends React.Component {
     const id = this.props.userData.id ? this.props.userData.id : 'None'
     const firstName = this.props.userData.firstName ? this.props.userData.firstName : 'None'
     const lastName = this.props.userData.lastName ? this.props.userData.lastName : 'None'
+    const { longitude, latitude } = this.props.userData.location;
     return (
       <View style={styles.container}>
         <Text>FIND YOUR BAR</Text>
         <Text>COUCOU !</Text>
         <Text>USER ID: {id}</Text>
         <Text>USER NAME:{firstName} {lastName}</Text>
+        <Text>Loc:[{longitude}, {latitude}]</Text>
       </View>
     );
   };
