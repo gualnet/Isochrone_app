@@ -37,9 +37,13 @@ const getEventById = async (eventId) => {
 };
 
 const createEvent = async (event) => {
-  console.log('URL -->',`${API_URL}/events`)
-  const response = await axios.post(`${API_URL}/events`, { event });
-  // console.log(response);
+  const userToken = store.getState().userInfoReducer.token;
+  const response = await axios({
+    method: 'POST',
+    url: `${API_URL}/events`,
+    headers: {'Authorization': `Bearer ${userToken}`},
+    data: { event },
+  })
   return response;
 };
 
