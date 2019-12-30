@@ -20,7 +20,7 @@ class ContactList extends React.Component {
   };
 
   loadContacts = async () => {
-    if (!config.Permissions.Location) return;
+    if (!config.Permissions.Contacts) return;
 
     const { data } = await Contacts.getContactsAsync({
       fields: [
@@ -118,12 +118,12 @@ class ContactList extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.loadContacts();
+  async componentDidMount() {
+    await this.loadContacts();
   };
 
   render() {
-    console.log('\n Render');
+    // console.log('\n Render Contact List');
     return (
       <View>
         <FlatList
