@@ -7,6 +7,8 @@ import { Text, View, FlatList, TouchableOpacity, Switch } from 'react-native';
 import API from '../../API';
 import config from '../../config/config';
 import style from './style';
+import styles from './style';
+
 
 class ContactList extends React.Component {
   constructor(props) {
@@ -64,22 +66,56 @@ class ContactList extends React.Component {
 
   renderItem = ({ item }) => {
     const isSelect = this.isSelected(item);
-    return (
-      <View style={style.contactItem}>
-        <TouchableOpacity onPress={this.addToContactSelection}>
-          <Text>{item.firstName} {item.lastName}</Text>
-          { item.phoneNumbers && item.phoneNumbers[0] && <Text>{item.phoneNumbers[0].number}</Text> }
-          { (!item || !item.phoneNumbers || !item.phoneNumbers[0]) && <Text>Pas de numero</Text> }
-          {
-            item.createdAt &&
-            <Switch
-              value={isSelect}
-              onValueChange={(e) => this.addToContactSelection(e, item)}
-              ></Switch>
-          }
-        </TouchableOpacity>
-      </View>
-    );
+    if (item.createdAt) {
+      return (
+        <View style={style.contactItem}>
+          <TouchableOpacity style={styles.touchableStyle}>
+            <View style={style.contactInfoView}>
+              <Text>{item.firstName} {item.lastName}</Text>
+              {
+                item.phoneNumbers && item.phoneNumbers[0] && <Text>{item.phoneNumbers[0].number}</Text>
+              }
+              {
+                // Si pas de numero dans item.phoneNumbers -> display item.phoneNumber
+                (!item || !item.phoneNumbers || !item.phoneNumbers[0]) && item.phoneNumber 
+                && <Text>{item.phoneNumber}</Text>
+              }
+            </View>
+            <View style={style.contactSwitchView}>
+              <Switch
+                value={isSelect}
+                onValueChange={(e) => this.addToContactSelection(e, item)}
+                ></Switch>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <View style={style.contactItem}>
+          <TouchableOpacity style={styles.touchableStyle}>
+            <View style={style.contactInfoView}>
+              <Text>{item.firstName} {item.lastName}</Text>
+              {
+                item.phoneNumbers && item.phoneNumbers[0] && <Text>{item.phoneNumbers[0].number}</Text>
+              }
+              {
+                // Si pas de numero dans item.phoneNumbers -> display item.phoneNumber
+                (!item || !item.phoneNumbers || !item.phoneNumbers[0]) && item.phoneNumber 
+                && <Text>{item.phoneNumber}</Text>
+              }
+            </View>
+            <View style={style.contactSwitchView}>
+              <Switch
+                disabled
+                value={isSelect}
+                onValueChange={(e) => {}}// do nothing
+                ></Switch>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    }
   };
 
   componentDidMount() {
@@ -87,6 +123,7 @@ class ContactList extends React.Component {
   };
 
   render() {
+    console.log('\n Render');
     return (
       <View>
         <FlatList

@@ -18,8 +18,8 @@ const colors = {
   caption: '#B0BAC9',
   input: 'rgba(224, 231, 255, 0.20)', // '#E0E7FF' 20%
   border: '#D6DDF6',
-  card: 'rgba(46,91,255,0.08)',
-  shadow: 'rgba(46,91,255,0.07)',
+  card: 'rgb(246, 247, 248)',
+  shadow: 'rgba(240, 243, 254, 0.85)',
 };
 
 const sizes = {
