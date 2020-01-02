@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, View } from 'react-native';
+import React from 'react';
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
+import { StyleSheet, SafeAreaView, View } from 'react-native';
 
 import { Text } from '../../Components';
 import API from '../../API';
-import { theme } from '../../libs/';
 
 class Recommandation extends React.Component {
   state = {
