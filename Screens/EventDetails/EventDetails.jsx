@@ -15,14 +15,22 @@ class EventDetails extends React.Component {
     this.state = {
       event: props.navigation.state.params.Event,
       myEventData: {},
-    }
+      updates: {
+        position: [],
+      },
+    };
   }
 
   navigateToEventStyleSelectionScreen = () => {
     this.props.navigation.navigate("Events");
   };
 
-  handleValidationClick = () => {
+  handleValidationClick = async () => {
+    if (this.state.updates.position.length > 0) {
+      // send position to the server
+      await API.Events.updateUserPostionForTheEvent(this.state.event.id, this.state.updates.position);
+    }
+
     this.navigateToEventStyleSelectionScreen();
   };
 
@@ -39,7 +47,7 @@ class EventDetails extends React.Component {
     const arr = [];
     if (!participantsList) return;
     for (const item of participantsList) {
-      arr.push(<Text key={item.id}>{item.firstName} {item.lastName}</Text>);
+      arr.push(<Text key={item.id}> - {item.firstName} {item.lastName}</Text>);
     };
     return arr;
   };
@@ -79,10 +87,20 @@ class EventDetails extends React.Component {
     }
   }
 
+  UpdatedPosition = async (event) => {
+    console.log(this.state.myEventData === this.state.event.participantsList[1])
+    const newCoordinates = event.coordinate;
+    this.setState({
+      ...this.state,
+      updates: {
+        position: [event.coordinate.latitude, event.coordinate.longitude],
+      }
+    })
+  };
+
   render() {
+    // console.log('render', this.state)
     const { event, myEventData } = this.state;
-    // console.log('EVENT', event)
-    // console.log('MYDATA', myEventData)
     return (
       <SafeAreaView style={styles.mainView}>
         <FadIn>
@@ -95,13 +113,14 @@ class EventDetails extends React.Component {
               <View style={styles.mapView}>
                 <MapLocation 
                   event={this.state.event}
-                  myEventData={this.state.myEventData} />
+                  myEventData={this.state.myEventData}
+                  updateUserPosition={this.UpdatedPosition} />
               </View>
               <View style={styles.detailsView}>
                 <Text>ID: {event.id}</Text>
                 <Text>NAME: {event.name}</Text>
                 <Text>DATE: {event.date}</Text>
-                {/* <Text>MY POSITION: {event.date}</Text> */}
+                <Text>MY POSITION: [{this.state.myEventData.latitude} / {this.state.myEventData.longitude}]</Text>
                 <Text>PARTICIPANT: </Text>
                 {this.buildParticipantList()}
 

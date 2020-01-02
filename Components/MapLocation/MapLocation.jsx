@@ -32,6 +32,21 @@ class MapLocation extends React.Component {
     this.props.dispatch(action);
   };
 
+  // UpdatedPosition = async (event) => {
+  //   console.log('this.state', this.state);
+  //   console.log(this.state.myEventData === this.state.event.participantsList[1])
+  //   const newCoordinates = event.coordinate;
+  //   console.log('====', event.coordinate)
+  //   this.setState({
+  //     ...this.state,
+  //     myEventData: {
+  //       ...this.state.myEventData,
+  //       longitude: event.coordinate.longitude,
+  //       latitude: event.coordinate.latitude,
+  //     }
+  //   })
+  // };
+
   buildParticipantMarkers = () => {
     // console.log('buildParticipantMarkers', this.state);
     const { participantsList } = this.state.event;
@@ -48,6 +63,9 @@ class MapLocation extends React.Component {
             title={participant.firstName}
             description='Ma postion'
             pinColor='blue'
+            draggable
+            onDragEnd={(e) => this.props.updateUserPosition(e.nativeEvent)}
+
           />
         );
       } else {
