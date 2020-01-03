@@ -76,6 +76,17 @@ class EventDetails extends React.Component {
     }
   };
 
+  setSelectedMeetingPoint = (point) => {
+    console.log('\n\nsetSelectedMeetingPoint', point);
+    this.setState({
+      ...this.state,
+      event: {
+        ...this.state.event,
+        meetingPoint: point,
+      },
+    });
+  };
+
   async componentDidMount() {
     await this.updateStateEventDetails();
   }
@@ -99,7 +110,7 @@ class EventDetails extends React.Component {
   };
 
   render() {
-    // console.log('render', this.state)
+    console.log('render', this.state.event)
     const { event, myEventData } = this.state;
     return (
       <SafeAreaView style={styles.mainView}>
@@ -120,6 +131,7 @@ class EventDetails extends React.Component {
                 <Text>ID: {event.id}</Text>
                 <Text>NAME: {event.name}</Text>
                 <Text>DATE: {event.date}</Text>
+                <Text>Meeting Point: {event.meetingPoint && event.meetingPoint.name}</Text>
                 <Text>MY POSITION: [{this.state.myEventData.latitude} / {this.state.myEventData.longitude}]</Text>
                 <Text>PARTICIPANT: </Text>
                 {this.buildParticipantList()}
