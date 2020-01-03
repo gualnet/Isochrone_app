@@ -95,9 +95,11 @@ const getEventTypes = async () => {
 
 const getRecommandations = async (event) => {
   try {
+    const userToken = store.getState().userInfoReducer.token;
     const response = await axios({
       method: 'POST',
-      url: `${API_URL}/external/poi`,
+      url: `${API_URL}/external/place/search`,
+      headers: {'Authorization': `Bearer ${userToken}`},
       data: { event },
     });
     return response;
@@ -107,13 +109,33 @@ const getRecommandations = async (event) => {
   
 };
 
+/**
+ * Take a google place id
+ * return details related to the provided place id
+ * @param {} placeId 
+ */
+const getPlaceDetails = async (placeId) => {
+  try {
+    const userToken = store.getState().userInfoReducer.token;
+    const response = await axios({
+      method: 'POST',
+      url: `${API_URL}/external/place/details`,
+      headers: {'Authorization': `Bearer ${userToken}`},
+      data: { placeId },
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export default {
   getAllUserEvents,
   getEventById,
   createEvent,
-  // updateEvent,
   deleteEvent,
   getEventTypes,
   getRecommandations,
+  getPlaceDetails,
   updateUserPostionForTheEvent,
 };
