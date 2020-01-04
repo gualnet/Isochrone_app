@@ -17,6 +17,10 @@ const defaultConf = {
     Contacts: false,
     Location: false,
   },
+  unsplash: {
+    API_URL: '...',
+    API_KEY: '...',
+  },
 };
 
 export default defaultConf;
