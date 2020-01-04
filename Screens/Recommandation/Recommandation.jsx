@@ -5,11 +5,23 @@ import { StyleSheet, SafeAreaView, View, Image } from 'react-native';
 
 import { Text, Button } from '../../Components';
 import API from '../../API';
+import config from '../../config/config';
 
 class Recommandation extends React.Component {
   state = {
     data: null,
     selectedPoi: undefined,
+    randomImageLink: undefined,
+  };
+
+  setRandomImage = async () => {
+    // const imgLink = await API.Unsplash.getRandomPhoto('food');
+    const imgLink = 'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80';
+
+    this.setState({
+      ...this.state,
+      randomImageLink: imgLink,
+    });
   };
 
   fetchRecommandations = async (event) => {
@@ -30,7 +42,8 @@ class Recommandation extends React.Component {
     console.clear();
     console.log('POI', selectedPOI.place_id, selectedPOI.name);
     const response = await API.Events.getPlaceDetails(selectedPOI.place_id);
-    console.log('RESPONSE', response.data);
+    // console.log('RESPONSE', response.data);
+    await this.setRandomImage();
     this.setState({
       ...this.state,
       selectedPoi: response.data,
@@ -88,12 +101,9 @@ class Recommandation extends React.Component {
   }
   
   render() {
+    console.log('\nRENDER RECOMMANDATION')
     // console.log('...', this.props.navigation.state.params.event)
-    let pics = undefined;
-    if (this.state.selectedPoi) {
-      console.log('PICSTREAM', this.state.selectedPoi.pictureStream);
-      pics = this.state.selectedPoi.pictureStream;
-    }
+    // console.log('img', this.state.randomImageLink)
     const event = this.props.navigation.state.params.event;
     return (
       <SafeAreaView style={styles.safeView}>
@@ -125,7 +135,7 @@ class Recommandation extends React.Component {
             <View>
               <Image
                 style={{width: 66, height: 58, borderColor: 'blue', borderWidth: 1}}
-                source={{uri: `data:image/png;base64,${undefined}`}}
+                source={{uri: this.state.randomImageLink}}
                 />
               <Text>NAME {this.state.selectedPoi.name}</Text>
               <Text>Link {this.state.selectedPoi.html_attributions}</Text>
