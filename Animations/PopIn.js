@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Dimensions } from 'react-native';
+import { Animated, Dimensions, BackHandler } from 'react-native';
 
 class popIn extends React.Component {
   constructor(props) {
@@ -25,7 +25,8 @@ class popIn extends React.Component {
       <Animated.View
         style={{ 
           flex: 1,
-          top: this.state.positionBottom
+          top: this.state.positionBottom,
+          backgroundColor: 'grey',
         }} >
         { this.props.children }
       </Animated.View>
