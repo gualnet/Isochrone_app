@@ -20,6 +20,14 @@ const colors = {
   border: '#D6DDF6',
   card: 'rgb(246, 247, 248)',
   shadow: 'rgba(240, 243, 254, 0.85)',
+  
+  // Base new style
+  mainBackground: '#EEEEEE',
+  shadowColorTop: '#000000',
+  shadowColorDown: '#FFFFFF',
+  // Input new style
+  inputBackground: self.mainBackground,
+  
 };
 
 const sizes = {
@@ -37,6 +45,11 @@ const sizes = {
   header: 16,
   body: 14,
   caption: 12,
+
+  // input sizes
+  inputBorderRadius: 20,
+  inputBorderWidth: 0,
+
 };
 
 const fonts = {

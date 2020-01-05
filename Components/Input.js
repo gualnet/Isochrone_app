@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, TextInput } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import Text from './Text';
 import Block from './Block';
@@ -35,7 +35,7 @@ export default class Input extends Component {
         {
           rightLabel ? rightLabel :
             <Ionicons
-              color={theme.colors.gray}
+              color={theme.colors.black}
               size={theme.sizes.font * 1.35}
               name={!toggleSecure ? "md-eye" : "md-eye-off"}
           />
@@ -87,15 +87,17 @@ export default class Input extends Component {
     return (
       <Block flex={false} margin={[theme.sizes.base, 0]}>
         {this.renderLabel()}
-        <TextInput
-          style={inputStyles}
-          secureTextEntry={isSecure}
-          autoComplete="off"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType={inputType}
-          {...props}
-        />
+        <View style={styles.viewShadow}>
+          <TextInput
+            style={[inputStyles, styles.inputStyles]}
+            secureTextEntry={isSecure}
+            autoComplete="off"
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType={inputType}
+            {...props}
+          />
+        </View>
         {this.renderToggle()}
         {this.renderRight()}
       </Block>
@@ -105,20 +107,36 @@ export default class Input extends Component {
 
 const styles = StyleSheet.create({
   input: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: theme.colors.black,
-    borderRadius: theme.sizes.radius,
-    fontSize: theme.sizes.font,
     fontWeight: '500',
     color: theme.colors.black,
     height: theme.sizes.base * 3,
+
+    backgroundColor: theme.colors.mainBackground,
+    borderRadius: theme.sizes.inputBorderRadius,
+    borderWidth: theme.sizes.inputBorderWidth,
+    shadowColor: theme.colors.shadowColorTop,
+    shadowOffset: { width: 8, height: 8 },
+    shadowRadius: 8,
+    shadowOpacity: 0.2,
+  },
+  viewShadow: {
+    borderRadius: theme.sizes.inputBorderRadius,
+    shadowColor: theme.colors.shadowColorDown,
+    shadowOffset: { width: -8, height: -8 },
+    shadowRadius: 8,
+    shadowOpacity: 1,
   },
   toggle: {
     position: 'absolute',
     alignItems: 'flex-end',
     width: theme.sizes.base * 2,
     height: theme.sizes.base * 2,
-    top: theme.sizes.base,
-    right: 0,
-  }
+    backgroundColor: '#ffffff00',
+    top: 0,
+    right: 10,
+  },
+  inputStyles: {
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
 });
