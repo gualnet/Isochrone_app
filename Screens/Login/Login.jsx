@@ -4,7 +4,6 @@ import { ActivityIndicator, Keyboard, KeyboardAvoidingView, StyleSheet } from 'r
 
 import { Button, Block, Input, Text } from '../../Components';
 import { theme } from '../../libs';
-import styles from './style';
 import SignUp from '../SignUp/SignUp';
 import { isValidEmail, isValidPassword } from '../../libs/helpers';
 import API from '../../API';
@@ -109,15 +108,25 @@ class Login extends Component {
                 defaultValue={this.state.password}
                 onChangeText={text => this.setState({ password: text })}
               />
-              <Button gradient onPress={() => this.handleLogin()}>
+              <Button 
+                style={styles.btnLogin}
+                // gradient
+                onPress={() => this.handleLogin()}>
                 {loading ?
                   <ActivityIndicator size="small" color="white" /> : 
-                  <Text bold white center>Login</Text>
+                  <Text
+                    bold
+                    // white
+                    center>
+                      Login
+                  </Text>
                 }
               </Button>
                 {/* // ! ajout d'une view pour aligner les 2 boutons */}
               <Button onPress={() => navigation.navigate('Forgot')}>
-                <Text gray caption center style={{ textDecorationLine: 'underline' }}>
+                <Text 
+                  // gray
+                  caption center style={{ textDecorationLine: 'underline' }}>
                   Forgot your password?
                 </Text>
               </Button>
@@ -148,3 +157,24 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(Login);
+
+const styles = StyleSheet.create({
+  login: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: theme.colors.mainBackground,
+  },
+  hasErrors: {
+    borderBottomColor: theme.colors.red,
+    color: theme.colors.red,
+  },
+  btnLogin: {
+    width: '50%'
+  },
+  btnPassForgot: {
+
+  },
+  btnSignUp: {
+
+  },
+});

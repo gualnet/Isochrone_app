@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 // import { LinearGradient } from 'expo';
 import { LinearGradient } from 'expo-linear-gradient';
 import { theme } from '../libs';
@@ -23,9 +23,9 @@ class Button extends Component {
 
     const buttonStyles = [
       styles.button,
-      shadow && styles.shadow,
-      color && styles[color], // predefined styles colors for backgroundColor
-      color && !styles[color] && { backgroundColor: color }, // custom backgroundColor
+      // shadow && styles.shadow,
+      // color && styles[color], // predefined styles colors for backgroundColor
+      // color && !styles[color] && { backgroundColor: color }, // custom backgroundColor
       style,
     ];
 
@@ -50,13 +50,16 @@ class Button extends Component {
     }
 
     return (
-      <TouchableOpacity
-        style={buttonStyles}
-        activeOpacity={opacity || 0.8}
-        {...props}
-      >
-        {children}
-      </TouchableOpacity>
+      <View style={styles.viewShadow}>
+        <TouchableOpacity
+          style={buttonStyles}
+          activeOpacity={opacity || 0.8}
+          {...props}
+        >
+          {children}
+        </TouchableOpacity>
+      </View>
+      
     )
   }
 }
@@ -75,16 +78,28 @@ export default Button;
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: theme.sizes.radius,
-    height: theme.sizes.base * 3,
+    backgroundColor: theme.colors.mainBackground,
+    borderRadius: theme.sizes.buttonBorderRadius,
+    height: theme.sizes.base * 2,
+
     justifyContent: 'center',
     marginVertical: theme.sizes.padding / 3,
+
+    borderRadius: theme.sizes.inputBorderRadius,
+    borderWidth: theme.sizes.inputBorderWidth,
+    shadowColor: theme.colors.shadowColorTop,
+    shadowOffset: { width: 8, height: 8 },
+    shadowRadius: 8,
+    shadowOpacity: 0.2,
   },
-  shadow: {
-    shadowColor: theme.colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
+  viewShadow: {
+    // special shadow effect for ios
+    borderRadius: theme.sizes.inputBorderRadius,
+    borderWidth: theme.sizes.inputBorderWidth,
+    shadowColor: theme.colors.shadowColorDown,
+    shadowOffset: { width: -8, height: -8 },
+    shadowRadius: 8,
+    shadowOpacity: 1,
   },
   accent: { backgroundColor: theme.colors.accent, },
   primary: { backgroundColor: theme.colors.primary, },

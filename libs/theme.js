@@ -26,8 +26,10 @@ const colors = {
   shadowColorTop: '#000000',
   shadowColorDown: '#FFFFFF',
   // Input new style
-  inputBackground: self.mainBackground,
-  
+  // inputBackground: self.mainBackground,
+  // inputBackground: '#EEEEEE',
+  // Button new style
+  // buttonBackground: self.mainBackground,
 };
 
 const sizes = {
@@ -46,9 +48,13 @@ const sizes = {
   body: 14,
   caption: 12,
 
-  // input sizes
+  // Input sizes
   inputBorderRadius: 20,
   inputBorderWidth: 0,
+  // Button sizes
+  buttonBorderRadius: 20,
+  buttonBorderWidth: 0,
+
 
 };
 
