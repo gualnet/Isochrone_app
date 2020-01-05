@@ -9,6 +9,7 @@ import SignUp from '../SignUp/SignUp';
 import { isValidEmail, isValidPassword } from '../../libs/helpers';
 import API from '../../API';
 
+// const VALID_EMAIL = "lea.sophie@isochrone.fr";
 const VALID_EMAIL = "test@isochrone.fr";
 const VALID_PASSWORD = "1234";
 
@@ -46,7 +47,7 @@ class Login extends Component {
     });
     // handle api response
     if (response.status === 200 && response.data) {
-      console.log('\nLOGIN RESPONSE', response.data);
+      // console.log('\nLOGIN RESPONSE', response.data);
 
       this.props.dispatch({
         type: 'SET_LOGIN_DATA',
@@ -94,7 +95,7 @@ class Login extends Component {
               >LOGIN REJECTED</Text>}
             <Block middle>
               <Input
-                label="Email"
+                placeholder="Email"
                 error={hasErrors('email')}
                 style={[styles.input, hasErrors('email')]}
                 defaultValue={this.state.email}
@@ -102,7 +103,7 @@ class Login extends Component {
               />
               <Input
                 secure={true}
-                label="Password"
+                placeholder="Password"
                 error={hasErrors('password')}
                 style={[styles.input, hasErrors('password')]}
                 defaultValue={this.state.password}

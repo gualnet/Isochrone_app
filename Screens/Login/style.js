@@ -4,13 +4,9 @@ const styles = StyleSheet.create({
   login: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: theme.colors.mainBackground,
   },
-  input: {
-    borderRadius: 0,
-    borderWidth: 0,
-    borderBottomColor: theme.colors.lightblue,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+  input: {},
   hasErrors: {
     borderBottomColor: theme.colors.red,
     color: theme.colors.red,

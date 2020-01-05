@@ -48,21 +48,21 @@ class SignUp extends React.Component {
             <Text h2 bold>Sign Up</Text>
             <Block middle>
               <Input
-                label="Login"
+                placeholder="Login"
                 error={hasErrors('login')}
                 style={[styles.input, hasErrors('login')]}
                 defaultValue={this.state.login}
                 onChangeText={text => this.setState({ login: text })}
               />
               <Input
-                label="Email"
+                placeholder="Email"
                 error={hasErrors('email')}
                 style={[styles.input, hasErrors('email')]}
                 defaultValue={this.state.email}
                 onChangeText={text => this.setState({ email: text })}
               />
               <Input
-                label="Number"
+                placeholder="Phone Number"
                 error={hasErrors('Phone Number')}
                 style={[styles.input, hasErrors('Phone Number')]}
                 defaultValue={this.state.phoneNumber}
@@ -70,7 +70,7 @@ class SignUp extends React.Component {
               />
               <Input
                 secure={true}
-                label="Password"
+                placeholder="Password"
                 error={hasErrors('password')}
                 style={[styles.input, hasErrors('password')]}
                 defaultValue={this.state.password}
@@ -106,21 +106,13 @@ export default SignUp;
 const styles = StyleSheet.create({
   Signup: {
     flex: 1,
-    // width: '100%',
-    // height: '96%',
+    backgroundColor: theme.colors.mainBackground,
     borderWidth: 1,
-    // borderRadius: 30,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     borderColor: theme.colors.gray2,
-    // alignItems: 'center',
   },
-  input: {
-    borderRadius: 0,
-    borderWidth: 0,
-    borderBottomColor: theme.colors.lightblue,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+  input: {},
   hasErrors: {
     borderBottomColor: theme.colors.red,
   }
