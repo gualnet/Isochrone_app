@@ -86,8 +86,8 @@ export default class Input extends Component {
 
     return (
       <Block flex={false} margin={[theme.sizes.base, 0]}>
-        {this.renderLabel()}
         <View style={styles.viewShadow}>
+          {this.renderLabel()}
           <TextInput
             style={inputStyles}
             secureTextEntry={isSecure}
@@ -97,9 +97,9 @@ export default class Input extends Component {
             keyboardType={inputType}
             {...props}
           />
+          {this.renderToggle()}
+          {this.renderRight()}
         </View>
-        {this.renderToggle()}
-        {this.renderRight()}
       </Block>
     )
   }
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     width: theme.sizes.base * 2,
     height: theme.sizes.base * 2,
     backgroundColor: '#ffffff00',
-    top: 0,
+    top: -47,
     right: 10,
   },
 });
