@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     color: theme.colors.black,
     height: theme.sizes.base * 3,
 
+    // Shadow effect for ios
     backgroundColor: theme.colors.mainBackground,
     borderRadius: theme.sizes.inputBorderRadius,
     borderWidth: theme.sizes.inputBorderWidth,
@@ -118,8 +119,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 8, height: 8 },
     shadowRadius: 8,
     shadowOpacity: 0.2,
+    // shadow effect for android
+    elevation: 2,
   },
   viewShadow: {
+    // special shadow effect for ios
     borderRadius: theme.sizes.inputBorderRadius,
     shadowColor: theme.colors.shadowColorDown,
     shadowOffset: { width: -8, height: -8 },
