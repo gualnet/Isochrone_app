@@ -89,7 +89,7 @@ export default class Input extends Component {
         {this.renderLabel()}
         <View style={styles.viewShadow}>
           <TextInput
-            style={[inputStyles, styles.inputStyles]}
+            style={inputStyles}
             secureTextEntry={isSecure}
             autoComplete="off"
             autoCapitalize="none"
@@ -110,6 +110,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: theme.colors.black,
     height: theme.sizes.base * 3,
+    paddingLeft: 20,
+    paddingRight: 20,
 
     // Shadow effect for ios
     backgroundColor: theme.colors.mainBackground,
@@ -138,9 +140,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff00',
     top: 0,
     right: 10,
-  },
-  inputStyles: {
-    paddingLeft: 20,
-    paddingRight: 20,
   },
 });
