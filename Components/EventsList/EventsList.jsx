@@ -13,7 +13,7 @@ class EventsList extends React.Component {
   render() {
     return (
       this.props.events.length !== 0 &&
-      <SafeAreaView style={styles.toptop}>
+      <SafeAreaView style={styles.mainContainer}>
         <FlatList
             data={this.props.events}
             keyExtractor={item => item.id.toString()}
