@@ -1,9 +1,11 @@
 import { StyleSheet } from 'react-native';
+import { theme } from '../../libs';
 
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: theme.colors.mainBackground,
   },
   topView: {
     flexDirection: 'row',
@@ -11,8 +13,11 @@ const styles = StyleSheet.create({
   },
   middleView: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   btnContainer: {
     flex: 1,

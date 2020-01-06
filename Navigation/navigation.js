@@ -4,6 +4,8 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 
+import { theme } from '../libs';
+
 // SCREENS
 import HomeScreen from '../Screens/Home/Home';
 import EventsManagement from '../Screens/Events/EventManager';
@@ -147,7 +149,8 @@ const MainTabNavigator = createBottomTabNavigator({
   tabBarOptions: {
     showLabel: true,
     // showIcon: true,
-    activeBackgroundColor: '#DDDDDD',
+    // activeBackgroundColor: '#DDDDDD',
+    activeBackgroundColor: theme.colors.mainBackground,
     inactiveBackgroundColor: '#F8F8F8',
   },
 });
