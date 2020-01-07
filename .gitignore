@@ -16,3 +16,4 @@ web-report/
 
 # Perso
 config/config.js
+Components/*_old.js

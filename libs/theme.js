@@ -22,14 +22,9 @@ const colors = {
   shadow: 'rgba(240, 243, 254, 0.85)',
   
   // Base new style
-  mainBackground: '#EEEEEE',
+  mainBackground: '#F9F9F9',
   shadowColorTop: '#000000',
   shadowColorDown: '#FFFFFF',
-  // Input new style
-  // inputBackground: self.mainBackground,
-  // inputBackground: '#EEEEEE',
-  // Button new style
-  // buttonBackground: self.mainBackground,
 };
 
 const sizes = {
@@ -55,6 +50,9 @@ const sizes = {
   buttonBorderRadius: 20,
   buttonBorderWidth: 0,
 
+  uikit: {
+    buttonHeight: 50,
+  },
 
 };
 
