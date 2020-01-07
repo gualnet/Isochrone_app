@@ -19,7 +19,10 @@ class FadeIn extends React.Component {
   render() {
     return (
       <Animated.View
-        style={{ left: this.state.positionLeft }} >
+        style={{
+          flex: 1,
+          left: this.state.positionLeft,
+          }} >
         { this.props.children }
       </Animated.View>
     );
