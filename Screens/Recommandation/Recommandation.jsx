@@ -1,11 +1,11 @@
 import React from 'react';
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
-import { StyleSheet, SafeAreaView, View, Image } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Image, TouchableHighlightComponent } from 'react-native';
+import { Button, Text } from 'native-base';
 
-import { Text, Button } from '../../Components';
 import API from '../../API';
-import config from '../../config/config';
+import { theme } from '../../libs';
 
 class Recommandation extends React.Component {
   state = {
@@ -102,30 +102,21 @@ class Recommandation extends React.Component {
   
   render() {
     console.log('\nRENDER RECOMMANDATION')
-    // console.log('...', this.props.navigation.state.params.event)
-    // console.log('img', this.state.randomImageLink)
     const event = this.props.navigation.state.params.event;
     return (
       <SafeAreaView style={styles.safeView}>
-        <View style={styles.topView}>
-          {/* <Text>1</Text>
-          <Text>2</Text>
-          <Text>3</Text> */}
-        </View>
-        <View style={styles.mapView}>
-          <MapView style={styles.mapStyle}
-            initialRegion={{
-              latitude: Number(event.participantsList[0].latitude),
-              longitude: Number(event.participantsList[0].longitude),
-              latitudeDelta: 0.1,
-              longitudeDelta: 0.1,
-            }}
-          >
-            {this.buildRecommandationMarkers()}
-            {this.buildParticipantMarkers()}
-          </MapView>
-        </View>
-        <View style={styles.bottomView}>
+        <MapView style={styles.mapStyle}
+          initialRegion={{
+            latitude: Number(event.participantsList[0].latitude),
+            longitude: Number(event.participantsList[0].longitude),
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1,
+          }}
+        >
+          {this.buildRecommandationMarkers()}
+          {this.buildParticipantMarkers()}
+        </MapView>
+        <View style={styles.middleView}>
           {
             !this.state.selectedPoi &&
             <Text>No POI Selected</Text>
@@ -144,9 +135,7 @@ class Recommandation extends React.Component {
           }
         </View>
         <View style={styles.btnView}>
-          <View style={styles.btnContainer}>
-            <Button gradient onPress={() => this.handleValidation()} ><Text secondary white center>Valider</Text></Button>
-          </View>
+          <Button onPress={() => this.handleValidation()} ><Text>Valider</Text></Button>
         </View>
       </SafeAreaView>
     );
@@ -158,30 +147,25 @@ export default Recommandation;
 const styles = StyleSheet.create({
   safeView:{
     flex: 1,
+    backgroundColor: theme.colors.mainBackground,
   },
   topView: {
     flex: 0,
   },
-  mapView: {
-    flex: 8,
-  },
   mapStyle: {
-    flex: 1,
+    flex: 5,
   },
-  bottomView: {
-    flex: 2,
+  middleView: {
+    flex: 3,
     flexDirection: 'column',
     alignItems: 'flex-start',
+    padding: 5,
   },
   btnView: {
     flex: 1,
+    maxHeight: theme.sizes.uikit.buttonHeight,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'space-around',
-    borderWidth: 1,
-    borderColor: 'black',
-  },
-  btnContainer: {
-    width: '40%',
   },
 });
