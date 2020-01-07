@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 
-import { Button, Text } from '../../Components';
+import { Button, Text } from 'native-base';
 import API from '../../API'
 import FadIn from '../../Animations/FadIn';
 import store from '../../Store/configStore';
@@ -115,52 +115,30 @@ class EventDetails extends React.Component {
     return (
       <SafeAreaView style={styles.mainView}>
         <FadIn>
-          {/* <View> */}
-            {/* <View style={styles.topView}>
-              <Text>EVENT DETAILS SCREEN</Text>
-            </View> */}
-
-            <View style={styles.middleView}>
-              <View style={styles.mapView}>
-                <MapLocation 
-                  event={this.state.event}
-                  myEventData={this.state.myEventData}
-                  updateUserPosition={this.UpdatedPosition} />
-              </View>
-              <View style={styles.detailsView}>
-                <Text>ID: {event.id}</Text>
-                <Text>NAME: {event.name}</Text>
-                <Text>DATE: {event.date}</Text>
-                <Text>Meeting Point: {event.meetingPoint && event.meetingPoint.name}</Text>
-                <Text>MY POSITION: [{this.state.myEventData.latitude} / {this.state.myEventData.longitude}]</Text>
-                <Text>PARTICIPANT: </Text>
-                {this.buildParticipantList()}
-
-              </View>
-            </View>
-            <View style={styles.recoBtnView}>
-              <View style={styles.btnContainer}>
-                <Button gradient onPress={() => this.recommandationClick()}><Text primary gray center>RECOMMANDATION</Text></Button>
-              </View>
-            </View>
-            
-
-            <View style={styles.bottomView}>
-              <View style={styles.bottomBtnView}>
-                <View style={styles.btnContainer}>
-                  <Button gradient onPress={() => this.handleValidationClick()}><Text primary grZy center>Valider</Text></Button>
-                </View>
-                <View style={styles.btnContainer}>
-                  <Button gradient onPress={() => this.handleReturnClick()} ><Text secondary white center>Retour</Text></Button>
-                </View>
-              </View>
-            </View>
-          {/* </View> */}
+          <View style={styles.mapView}>
+            <MapLocation 
+              event={this.state.event}
+              myEventData={this.state.myEventData}
+              updateUserPosition={this.UpdatedPosition} />
+          </View>
+          <View style={styles.detailsView}>
+            <Text>ID: {event.id}</Text>
+            <Text>NAME: {event.name}</Text>
+            <Text>DATE: {event.date}</Text>
+            <Text>Meeting Point: {event.meetingPoint && event.meetingPoint.name}</Text>
+            <Text>MY POSITION: [{this.state.myEventData.latitude} / {this.state.myEventData.longitude}]</Text>
+            <Text>PARTICIPANT: </Text>
+            {this.buildParticipantList()}
+          </View>
+          <View style={styles.bottomView}>
+            <Button onPress={() => this.recommandationClick()}><Text>RECOMMANDATION</Text></Button>
+            <Button gradient onPress={() => this.handleValidationClick()}><Text primary grZy center>Valider</Text></Button>
+            <Button gradient onPress={() => this.handleReturnClick()} ><Text secondary white center>Retour</Text></Button>
+          </View>
         </FadIn>
       </SafeAreaView>
     );
   };
-
 };
 
 export default EventDetails;
