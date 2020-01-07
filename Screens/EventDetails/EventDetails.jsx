@@ -131,9 +131,9 @@ class EventDetails extends React.Component {
             {this.buildParticipantList()}
           </View>
           <View style={styles.bottomView}>
-            <Button onPress={() => this.recommandationClick()}><Text>RECOMMANDATION</Text></Button>
-            <Button gradient onPress={() => this.handleValidationClick()}><Text primary grZy center>Valider</Text></Button>
-            <Button gradient onPress={() => this.handleReturnClick()} ><Text secondary white center>Retour</Text></Button>
+            <Button bordered onPress={() => this.recommandationClick()}><Text primary center>RECOMMANDATION</Text></Button>
+            <Button bordered onPress={() => this.handleValidationClick()}><Text primary center>Valider</Text></Button>
+            <Button bordered onPress={() => this.handleReturnClick()} ><Text secondary white center>Retour</Text></Button>
           </View>
         </FadIn>
       </SafeAreaView>

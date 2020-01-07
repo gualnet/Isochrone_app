@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Button as Button_ } from 'react-native';
-import { Button, Text } from '../../Components';
+import { View } from 'react-native';
+import { Button, Text } from 'native-base';
 import apiEvents from '../../API/Events';
 
 import EventList from '../../Components/EventsList/EventsList';
@@ -71,14 +71,15 @@ class EventsScreen extends React.Component {
       <View style={styles.mainView}>
         <View style={styles.topView} >
           <View style={styles.btnContainer} >
-            {/* <Button title="New" onPress={() => this.navigateToEventContactSelection()}>
+            <Button style={styles.button} bordered onPress={() => this.navigateToEventContactSelection()}>
               <Text>New</Text>
-            </Button> */}
-            <Button_ title="New" onPress={() => this.navigateToEventContactSelection()} />
+            </Button>
           </View>
           <View style={styles.btnContainer} >
             {/* <Button title="Update list" onPress={() => this.fetchUsersEvents()}><Text>Update list</Text></Button> */}
-            <Button_ title="Update list" onPress={() => this.fetchUsersEvents()} />
+            <Button bordered style={styles.button}  onPress={() => this.fetchUsersEvents()} >
+              <Text>Update</Text>
+            </Button>
           </View>
         </View>
 

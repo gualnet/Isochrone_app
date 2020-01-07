@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#F2F2F2',
   },
+  button: {
+    justifyContent: 'center',
+  },
 });
 
 export default styles;
