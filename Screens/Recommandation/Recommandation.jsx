@@ -1,8 +1,9 @@
 import React from 'react';
 import MapView from 'react-native-maps';
-import { Marker } from 'react-native-maps';
-import { StyleSheet, SafeAreaView, View, Image, TouchableHighlightComponent } from 'react-native';
-import { Button, Text } from 'native-base';
+import { Marker, AnimatedRegion, Animated } from 'react-native-maps';
+import { StyleSheet, SafeAreaView, Image, TouchableHighlightComponent } from 'react-native';
+import { Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon, Button } from 'native-base';
+
 
 import API from '../../API';
 import { theme } from '../../libs';
@@ -12,6 +13,7 @@ class Recommandation extends React.Component {
     data: null,
     selectedPoi: undefined,
     randomImageLink: undefined,
+    mapFocusLocation: undefined, // [lat, long]
   };
 
   setRandomImage = async () => {
@@ -33,10 +35,6 @@ class Recommandation extends React.Component {
       console.error(error);
     }
   };
-
-  async componentDidMount() {
-    await this.fetchRecommandations(this.props.navigation.state.params.event);
-  }
 
   selectRecommandationMarker = async (selectedPOI) => {
     console.clear();
@@ -95,47 +93,82 @@ class Recommandation extends React.Component {
     return markerArray;
   };
 
+  buildCardForDeckSwiper = (itemData) => {
+    return (
+      // <Card>
+        <CardItem cardBody style={styles.DeckSwiperCard}>
+          <Image
+            style={{width: 66, height: 58, borderColor: 'blue', borderWidth: 1}}
+            source={{uri: 'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'}}
+            // source={{uri: this.state.randomImageLink}}
+            />
+          <Text>NAME {itemData.name}</Text>
+          <Text>Link {itemData.html_attributions}</Text>
+          <Text>Rate: {itemData.rating}</Text>
+        </CardItem>
+      // </Card>
+    );
+  };
+
   handleValidation = () => {
     console.log('this.props', this.props)
     this.props.setSelectedMeetingPoint(this.state.selectedPoi);
-  }
+  };
+
+  handleSwipeRight = (itemData) => {
+    this.setState({
+      ...this.state,
+      mapFocusLocation: [
+        itemData.geometry.location.lat,
+        itemData.geometry.location.lng,
+      ]
+    })
+  };
   
+  async componentDidMount() {
+    await this.fetchRecommandations(this.props.navigation.state.params.event);
+  }
+
   render() {
-    console.log('\nRENDER RECOMMANDATION')
+    console.log('\nRENDER RECOMMANDATION', this.state.mapFocusLocation);
     const event = this.props.navigation.state.params.event;
+    const latitude = this.state.mapFocusLocation ? this.state.mapFocusLocation[0] : Number(event.participantsList[0].latitude);
+    const longitude = this.state.mapFocusLocation ? this.state.mapFocusLocation[1] : Number(event.participantsList[0].longitude);
     return (
       <SafeAreaView style={styles.safeView}>
         <MapView style={styles.mapStyle}
-          initialRegion={{
-            latitude: Number(event.participantsList[0].latitude),
-            longitude: Number(event.participantsList[0].longitude),
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
+          // initialRegion={{
+          //   latitude: Number(event.participantsList[0].latitude),
+          //   longitude: Number(event.participantsList[0].longitude),
+          //   latitudeDelta: 0.1,
+          //   longitudeDelta: 0.1,
+          // }}
+          region={{
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
           }}
         >
-          {this.buildRecommandationMarkers()}
-          {this.buildParticipantMarkers()}
+        {this.buildRecommandationMarkers()}
+        {this.buildParticipantMarkers()}
         </MapView>
         <View style={styles.middleView}>
           {
-            !this.state.selectedPoi &&
-            <Text>No POI Selected</Text>
-          }
-          {
-            this.state.selectedPoi &&
-            <View>
-              <Image
-                style={{width: 66, height: 58, borderColor: 'blue', borderWidth: 1}}
-                source={{uri: this.state.randomImageLink}}
-                />
-              <Text>NAME {this.state.selectedPoi.name}</Text>
-              <Text>Link {this.state.selectedPoi.html_attributions}</Text>
-              <Text>Rate: {this.state.selectedPoi.rating}</Text>
+            this.state.data &&
+            <View style={styles.DeckContainer}>
+              <DeckSwiper
+                style={styles.DeckSwiper}
+                dataSource={this.state.data}
+                renderItem={(item) => this.buildCardForDeckSwiper(item)}
+                onSwipeRight={(item) => this.handleSwipeRight(item)}
+                >
+              </DeckSwiper>
             </View>
           }
         </View>
         <View style={styles.btnView}>
-          <Button onPress={() => this.handleValidation()} ><Text>Valider</Text></Button>
+          <Button bordered onPress={() => this.handleValidation()} ><Text>Valider</Text></Button>
         </View>
       </SafeAreaView>
     );
@@ -157,9 +190,6 @@ const styles = StyleSheet.create({
   },
   middleView: {
     flex: 3,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    padding: 5,
   },
   btnView: {
     flex: 1,
@@ -168,4 +198,20 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-around',
   },
+  DeckContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    marginTop: 15,
+    padding: 10,
+  },
+  DeckSwiper: {
+    flex: 1,
+  },
+  DeckSwiperCard: {
+    // flex: 1,
+    flexDirection: 'column',
+    borderWidth: 2,
+    borderRadius: theme.sizes.inputBorderRadius,
+    borderColor: theme.colors.gray,
+  }
 });
