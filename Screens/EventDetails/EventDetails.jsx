@@ -42,6 +42,10 @@ class EventDetails extends React.Component {
     this.props.navigation.navigate("Recommandation", { event: this.state.event });
   };
 
+  chatRoomClick = () => {
+    this.props.navigation.navigate("ChatRoom");
+  };
+
   buildParticipantList = () => {
     const participantsList = this.state.event.participantsList
     const arr = [];
@@ -77,7 +81,7 @@ class EventDetails extends React.Component {
   };
 
   setSelectedMeetingPoint = (point) => {
-    console.log('\n\nsetSelectedMeetingPoint', point);
+    // console.log('\n\nsetSelectedMeetingPoint', point);
     this.setState({
       ...this.state,
       event: {
@@ -110,7 +114,8 @@ class EventDetails extends React.Component {
   };
 
   render() {
-    console.log('render', this.state.event)
+    // console.log('Render Event Details')
+    // console.log('state event', this.state.event)
     const { event, myEventData } = this.state;
     return (
       <SafeAreaView style={styles.mainView}>
@@ -131,7 +136,8 @@ class EventDetails extends React.Component {
             {this.buildParticipantList()}
           </View>
           <View style={styles.bottomView}>
-            <Button bordered onPress={() => this.recommandationClick()}><Text primary center>RECOMMANDATION</Text></Button>
+            <Button bordered onPress={() => this.recommandationClick()}><Text primary center>Recommandation</Text></Button>
+            <Button bordered onPress={() => this.chatRoomClick()}><Text primary center>Chat</Text></Button>
             <Button bordered onPress={() => this.handleValidationClick()}><Text primary center>Valider</Text></Button>
             <Button bordered onPress={() => this.handleReturnClick()} ><Text secondary white center>Retour</Text></Button>
           </View>

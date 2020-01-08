@@ -130,8 +130,9 @@ class Recommandation extends React.Component {
   }
 
   render() {
-    console.log('\nRENDER RECOMMANDATION', this.state.mapFocusLocation);
+    // console.log('\nRENDER RECOMMANDATION', this.state.mapFocusLocation);
     const event = this.props.navigation.state.params.event;
+
     const latitude = this.state.mapFocusLocation ? this.state.mapFocusLocation[0] : Number(event.participantsList[0].latitude);
     const longitude = this.state.mapFocusLocation ? this.state.mapFocusLocation[1] : Number(event.participantsList[0].longitude);
     return (
