@@ -18,6 +18,7 @@ import EventDetails from '../Screens/EventDetails/EventDetails';
 import Login from '../Screens/Login/Login';
 import Signup from '../Screens/SignUp/SignUp';
 import Recommandation from '../Screens/Recommandation/Recommandation';
+import ChatRoom from '../Screens/ChatRoom/ChatRoom';
 
 
 const HomeStackNavigator = createStackNavigator({
@@ -90,6 +91,12 @@ const EventsStackNavigator = createStackNavigator({
     screen: Recommandation,
     navigationOptions: ({navigation}) => ({
       title: "Recommandation",
+    }),
+  },
+  ChatRoom: {
+    screen: ChatRoom,
+    navigationOptions: ({navigation}) => ({
+      title: "ChatRoom",
     }),
   },
   
