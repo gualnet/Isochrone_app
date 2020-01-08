@@ -43,7 +43,7 @@ class EventDetails extends React.Component {
   };
 
   chatRoomClick = () => {
-    this.props.navigation.navigate("ChatRoom");
+    this.props.navigation.navigate("ChatRoom", { event: this.state.event});
   };
 
   buildParticipantList = () => {

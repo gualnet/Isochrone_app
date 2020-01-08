@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { GiftedChat } from 'react-native-gifted-chat'
+import API from '../../API';
 
 class ChatRoom extends React.Component {
   state = {
@@ -31,21 +32,11 @@ class ChatRoom extends React.Component {
           },
         },
         {
-          _id: 2,
+          _id: 3,
           text: 'Hello developer',
           createdAt: new Date(),
           user: {
             _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-        {
-          _id: 2,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 3,
             name: 'React Native',
             avatar: 'https://placeimg.com/140/140/any',
           },
@@ -55,13 +46,16 @@ class ChatRoom extends React.Component {
   }
 
   onSend(messages = []) {
+    console.log('onSend', messages);
+    API.Chat.addMessage(this.props.navigation.state.params.event.id, messages);
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
   }
 
   render() {
-    console.log(this.state.messages)
+    console.log('----------', this.props.navigation.state.params.event.id)
+    // console.log(this.state.messages)
     return (
       <GiftedChat
         // showAvatarForEveryMessage={true}
