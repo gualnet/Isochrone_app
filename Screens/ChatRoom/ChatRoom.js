@@ -1,4 +1,6 @@
 import React from 'react';
+import io from 'socket.io-client';
+import config from '../../config/config';
 
 import { GiftedChat } from 'react-native-gifted-chat'
 import API from '../../API';
@@ -8,50 +10,28 @@ class ChatRoom extends React.Component {
     messages: [],
   }
 
-  componentDidMount() {
-    this.setState({
-      messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-        {
-          _id: 2,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-        {
-          _id: 3,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-      ],
-    })
+  onSend(messages = []) {
+    try {
+      console.log('onSend', messages);
+      // API.Chat.addMessage(this.props.navigation.state.params.event.id, messages);
+      console.log('000')
+      this.socket.emit('chat message', messages);
+      console.log('001')
+      // this.setState(previousState => ({
+      //   messages: GiftedChat.append(previousState.messages, messages),
+      // }))
+    } catch (error) {
+      console.error(error);
+    }
+    
   }
 
-  onSend(messages = []) {
-    console.log('onSend', messages);
-    API.Chat.addMessage(this.props.navigation.state.params.event.id, messages);
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }))
-  }
+  componentDidMount() {
+    this.socket = io(config.API_HOST);
+    this.socket.on("chat message", msg => {
+      this.setState({ chatMessages: [...this.state.chatMessages, msg] });
+    });
+  };
 
   render() {
     console.log('----------', this.props.navigation.state.params.event.id)
