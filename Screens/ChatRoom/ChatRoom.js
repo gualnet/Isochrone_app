@@ -1,6 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import config from '../../config/config';
+import store from '../../Store/configStore'
 
 import { GiftedChat } from 'react-native-gifted-chat'
 import API from '../../API';
@@ -12,11 +13,9 @@ class ChatRoom extends React.Component {
 
   onSend(messages = []) {
     try {
-      console.log('onSend', messages);
+      messages[0].user._id = store.getState().userInfoReducer.id;
       // API.Chat.addMessage(this.props.navigation.state.params.event.id, messages);
-      console.log('000')
       this.socket.emit('chat message', messages);
-      console.log('001')
       // this.setState(previousState => ({
       //   messages: GiftedChat.append(previousState.messages, messages),
       // }))
@@ -27,15 +26,16 @@ class ChatRoom extends React.Component {
   }
 
   componentDidMount() {
+    
     this.socket = io(config.API_HOST);
     this.socket.on("chat message", msg => {
-      this.setState({ chatMessages: [...this.state.chatMessages, msg] });
+      this.setState({ messages: [...msg, ...this.state.messages] });
     });
   };
 
   render() {
-    console.log('----------', this.props.navigation.state.params.event.id)
-    // console.log(this.state.messages)
+    console.log('RENDER CHAT ROOM')
+    const myId = store.getState().userInfoReducer.id;
     return (
       <GiftedChat
         // showAvatarForEveryMessage={true}
@@ -43,7 +43,7 @@ class ChatRoom extends React.Component {
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{
-          _id: 1,
+          _id: myId,
         }}
       />
     )
