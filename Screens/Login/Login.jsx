@@ -85,7 +85,7 @@ class Login extends Component {
       return (
         <KeyboardAvoidingView style={styles.mainView} behavior="padding">
           <View style={styles.topView}>
-            {/* <Text h1 bold>Login</Text> */}
+            <Text style={styles.title}>ISOCHRONE</Text>
             {
               this.state.errors[0] === 'rejected' && 
               <Text 
@@ -185,6 +185,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   // -----------
+  title: {
+    marginTop: 20,
+    fontSize: 30,
+    textAlign: 'center',
+  },
   buttons: {
     marginTop: 2,
     marginBottom: 2,
