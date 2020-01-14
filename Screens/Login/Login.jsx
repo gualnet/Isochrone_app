@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ActivityIndicator, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { Button, Text, Input, Form, Item, View, Icon} from 'native-base';
 
-import { Button, Block, Input, Text } from '../../Components';
 import { theme } from '../../libs';
 import SignUp from '../SignUp/SignUp';
 import { isValidEmail, isValidPassword } from '../../libs/helpers';
@@ -83,61 +83,63 @@ class Login extends Component {
     const hasErrors = key => errors.includes(key) ? styles.hasErrors : null;
     if (this.state.page === 'Login') {
       return (
-        <KeyboardAvoidingView style={styles.login} behavior="padding">
-          <Block padding={[0, theme.sizes.base * 2]}>
-            <Text h1 bold>Login</Text>
+        <KeyboardAvoidingView style={styles.mainView} behavior="padding">
+          <View style={styles.topView}>
+            {/* <Text h1 bold>Login</Text> */}
             {
               this.state.errors[0] === 'rejected' && 
               <Text 
                 error={hasErrors('rejected')}
                 style={[styles.input, hasErrors('rejected')]}
-              >LOGIN REJECTED</Text>}
-            <Block middle>
-              <Input
-                placeholder="Email"
-                error={hasErrors('email')}
-                style={[styles.input, hasErrors('email')]}
-                defaultValue={this.state.email}
-                onChangeText={text => this.setState({ email: text })}
-              />
-              <Input
-                secure={true}
-                placeholder="Password"
-                error={hasErrors('password')}
-                style={[styles.input, hasErrors('password')]}
-                defaultValue={this.state.password}
-                onChangeText={text => this.setState({ password: text })}
-              />
-              <Button 
-                style={styles.btnLogin}
-                // gradient
-                onPress={() => this.handleLogin()}>
-                {loading ?
-                  <ActivityIndicator size="small" color="white" /> : 
-                  <Text
-                    bold
-                    // white
-                    center>
-                      Login
-                  </Text>
-                }
-              </Button>
-                {/* // ! ajout d'une view pour aligner les 2 boutons */}
-              <Button onPress={() => navigation.navigate('Forgot')}>
-                <Text 
-                  // gray
-                  caption center style={{ textDecorationLine: 'underline' }}>
-                  Forgot your password?
-                </Text>
-              </Button>
-              {/* <Button onPress={() => navigation.navigate('Signup')}> */}
-              <Button onPress={() => this.setPage('Signup')}>
-                <Text secondary center >
-                  Sign Up
-                </Text>
-              </Button>
-            </Block>
-          </Block>
+              >LOGIN REJECTED</Text>
+            }
+            <View style={styles.middleView}>
+              <Form style={styles.formContainer}>
+                {/* {!hasErrors('email') && <Item>}
+                {hasErrors('email') && <Item error>} */}
+                <Item>
+                  <Input
+                    placeholder="Email"
+                    error='red'
+                    success='green'
+                    error={hasErrors('email')}
+                    style={[styles.input, hasErrors('email')]}
+                    defaultValue={this.state.email}
+                    value={this.state.email}
+                    onChangeText={text => this.setState({ email: text })}
+                  />
+                </Item>
+                <Item>
+                  <Input
+                    placeholder="Password"
+                    error='red'
+                    success='green'
+                    error={hasErrors('email')}
+                    style={[styles.input, hasErrors('email')]}
+                    defaultValue={this.state.password}
+                    onChangeText={text => this.setState({ password: text })}
+                  />
+                  <Icon active name='eye' />
+                </Item>
+                <Text style={styles.forgotText} onPress={() => console.log('FORGOT CLICK 1')}>Forgot your password ?</Text>
+              </Form>
+              <View style={styles.buttonsContainer}>
+                <Button 
+                  bordered
+                  style={styles.buttons}
+                  onPress={() => this.handleLogin()}>
+                  {loading ?
+                    <ActivityIndicator size="small" color="white" /> : 
+                    <Text bold center>Login</Text>
+                  }
+                </Button>
+                <Button style={styles.buttons} bordered onPress={() => this.setPage('Signup')}>
+                  <Text>Sign Up</Text>
+                </Button>
+
+              </View>
+            </View>
+          </View>
         </KeyboardAvoidingView>
       )
     } else if (this.state.page === 'Signup') {
@@ -159,22 +161,39 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)(Login);
 
 const styles = StyleSheet.create({
-  login: {
+  mainView: {
     flex: 1,
     justifyContent: 'center',
     backgroundColor: theme.colors.mainBackground,
   },
-  hasErrors: {
-    borderBottomColor: theme.colors.red,
-    color: theme.colors.red,
+  topView: {
+    flex: 1,
   },
-  btnLogin: {
-    width: '50%'
+  middleView: {
+    flex: 1,
+    flexDirection: 'column',
   },
-  btnPassForgot: {
-
+  formContainer: {
+    flex: 5,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
-  btnSignUp: {
-
+  buttonsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  // -----------
+  buttons: {
+    marginTop: 2,
+    marginBottom: 2,
+  },
+  forgotText: {
+    marginTop: 10,
+    marginRight: 10,
+    textAlign: 'right',
+    fontSize: 12,
+    color: theme.colors.gray3,
   },
 });
