@@ -39,7 +39,10 @@ class EventDetails extends React.Component {
   };
 
   recommandationClick = () => {
-    this.props.navigation.navigate("Recommandation", { event: this.state.event });
+    this.props.navigation.navigate("Recommandation", {
+      event: this.state.event,
+      setSelectedMeetingPoint: this.setSelectedMeetingPoint,
+    });
   };
 
   chatRoomClick = () => {
