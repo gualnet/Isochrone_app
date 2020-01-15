@@ -117,7 +117,7 @@ class EventDetails extends React.Component {
   };
 
   render() {
-    console.log('Render Event Details', this.state)
+    console.log('Render Event Details')
     // console.log('state event', this.state.event)
     const { event, myEventData } = this.state;
     return (

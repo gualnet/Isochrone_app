@@ -37,19 +37,6 @@ class Recommandation extends React.Component {
     }
   };
 
-  // selectRecommandationMarker = async (selectedPOI) => {
-  //   console.clear();
-  //   console.log('POI', selectedPOI.place_id, selectedPOI.name);
-  //   const response = await API.Events.getPlaceDetails(selectedPOI.place_id);
-  //   // console.log('RESPONSE', response.data);
-  //   await this.setRandomImage();
-  //   this.setState({
-  //     ...this.state,
-  //     // selectedPoi: response.data,
-  //   });
-  //   return;
-  // };
-
   buildRecommandationMarkers = () => {
     // console.log('buildRecommandationMarkers', this.state)
     if (!this.state.data) {
@@ -96,7 +83,7 @@ class Recommandation extends React.Component {
 
   buildCardForDeckSwiper = (itemData) => {
     console.log('\nBUILD NEW CARD')
-    console.log('itemData', itemData)
+    // console.log('itemData', itemData)
     // console.log('this.state.selectedPoi', this.state.selectedPoi);
 
     return (
@@ -149,7 +136,7 @@ class Recommandation extends React.Component {
   };
 
   render() {
-    console.log('\nRENDER RECOMMANDATION', this.state);
+    console.log('\nRENDER RECOMMANDATION');
     const event = this.props.navigation.state.params.event;
     let latitude, longitude;
     const cardIndex = this.state.cardIndex;
@@ -160,10 +147,8 @@ class Recommandation extends React.Component {
       latitude = this.state.data[cardIndex].geometry.location.lat;
       longitude = this.state.data[cardIndex].geometry.location.lng;
     }
-    console.log('=====', latitude, longitude);
     return (
       <SafeAreaView style={styles.safeView}>
-  <Text> {this.state.cardIndex}</Text>
         <MapView style={styles.mapStyle}
           region={{
             latitude: latitude,
