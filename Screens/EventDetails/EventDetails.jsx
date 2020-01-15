@@ -84,7 +84,7 @@ class EventDetails extends React.Component {
   };
 
   setSelectedMeetingPoint = (point) => {
-    // console.log('\n\nsetSelectedMeetingPoint', point);
+    console.log('\n\nsetSelectedMeetingPoint', point);
     this.setState({
       ...this.state,
       event: {
@@ -117,7 +117,7 @@ class EventDetails extends React.Component {
   };
 
   render() {
-    // console.log('Render Event Details')
+    console.log('Render Event Details', this.state)
     // console.log('state event', this.state.event)
     const { event, myEventData } = this.state;
     return (

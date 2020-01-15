@@ -10,8 +10,9 @@ import { theme } from '../../libs';
 
 class Recommandation extends React.Component {
   state = {
+    cardIndex: 0,
     data: null,
-    selectedPoi: undefined,
+    // selectedPoi: undefined,
     randomImageLink: undefined,
     mapFocusLocation: undefined, // [lat, long]
   };
@@ -36,18 +37,18 @@ class Recommandation extends React.Component {
     }
   };
 
-  selectRecommandationMarker = async (selectedPOI) => {
-    console.clear();
-    console.log('POI', selectedPOI.place_id, selectedPOI.name);
-    const response = await API.Events.getPlaceDetails(selectedPOI.place_id);
-    // console.log('RESPONSE', response.data);
-    await this.setRandomImage();
-    this.setState({
-      ...this.state,
-      selectedPoi: response.data,
-    });
-    return;
-  };
+  // selectRecommandationMarker = async (selectedPOI) => {
+  //   console.clear();
+  //   console.log('POI', selectedPOI.place_id, selectedPOI.name);
+  //   const response = await API.Events.getPlaceDetails(selectedPOI.place_id);
+  //   // console.log('RESPONSE', response.data);
+  //   await this.setRandomImage();
+  //   this.setState({
+  //     ...this.state,
+  //     // selectedPoi: response.data,
+  //   });
+  //   return;
+  // };
 
   buildRecommandationMarkers = () => {
     // console.log('buildRecommandationMarkers', this.state)
@@ -67,7 +68,7 @@ class Recommandation extends React.Component {
           }}
           title={elem.name}
           description={elem.vicinity}
-          onPress={(e) => this.selectRecommandationMarker(poi)}
+          // onPress={(e) => this.selectRecommandationMarker(poi)}
         />
       );
     }
@@ -94,61 +95,81 @@ class Recommandation extends React.Component {
   };
 
   buildCardForDeckSwiper = (itemData) => {
+    console.log('\nBUILD NEW CARD')
+    console.log('itemData', itemData)
+    // console.log('this.state.selectedPoi', this.state.selectedPoi);
+
     return (
-      // <Card>
-        <CardItem cardBody style={styles.DeckSwiperCard}>
-          <Image
-            style={{width: 66, height: 58, borderColor: 'blue', borderWidth: 1}}
-            source={{uri: 'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'}}
-            // source={{uri: this.state.randomImageLink}}
-            />
-          <Text>NAME {itemData.name}</Text>
-          <Text>Link {itemData.html_attributions}</Text>
-          <Text>Rate: {itemData.rating}</Text>
-        </CardItem>
-      // </Card>
+      <CardItem cardBody style={styles.DeckSwiperCard}>
+        <Image
+          style={{width: 66, height: 58, borderColor: 'blue', borderWidth: 1}}
+          source={{uri: 'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'}}
+          // source={{uri: this.state.randomImageLink}}
+          />
+        <Text>NAME {itemData.name}</Text>
+        <Text>Link {itemData.html_attributions}</Text>
+        <Text>Rate: {itemData.rating}</Text>
+      </CardItem>
     );
   };
 
   handleValidation = () => {
-    console.log('this.props', this.props)
-    this.props.setSelectedMeetingPoint(this.state.selectedPoi);
-  };
-
-  handleSwipeRight = (itemData) => {
-    this.setState({
-      ...this.state,
-      mapFocusLocation: [
-        itemData.geometry.location.lat,
-        itemData.geometry.location.lng,
-      ]
-    })
+    this.props.navigation.state.params.setSelectedMeetingPoint(this.state.data[this.state.cardIndex]);
+    this.props.navigation.navigate("EventDetails");
   };
   
   async componentDidMount() {
+    console.log('COMPO DID MOUNT')
     await this.fetchRecommandations(this.props.navigation.state.params.event);
   }
 
-  render() {
-    // console.log('\nRENDER RECOMMANDATION', this.state.mapFocusLocation);
-    const event = this.props.navigation.state.params.event;
+  increaseCardIndex = () => {
+    if (!this.state.data) return null;
+    const maxIndex = this.state.data.length;
+    let newIndex = 0;
+    if (this.state.cardIndex < maxIndex) {
+      newIndex = this.state.cardIndex + 1;
+    }
+    else if (this.state.cardIndex === maxIndex) {
+      newIndex = 0;
+    }
+    this.setState({ cardIndex: newIndex });
+  };
+  decreaseCardIndex = () => {
+    if (!this.state.data) return null;
+    const maxIndex = this.state.data.length;
+    let newIndex = 0;
+    if (this.state.cardIndex > 0) {
+      newIndex = this.state.cardIndex - 1;
+    }
+    else if (this.state.cardIndex === 0) {
+      newIndex = maxIndex;
+    }
+    this.setState({ cardIndex: newIndex });
+  };
 
-    const latitude = this.state.mapFocusLocation ? this.state.mapFocusLocation[0] : Number(event.participantsList[0].latitude);
-    const longitude = this.state.mapFocusLocation ? this.state.mapFocusLocation[1] : Number(event.participantsList[0].longitude);
+  render() {
+    console.log('\nRENDER RECOMMANDATION', this.state);
+    const event = this.props.navigation.state.params.event;
+    let latitude, longitude;
+    const cardIndex = this.state.cardIndex;
+    
+    latitude = this.state.mapFocusLocation ? this.state.mapFocusLocation[0] : Number(event.participantsList[0].latitude);
+    longitude = this.state.mapFocusLocation ? this.state.mapFocusLocation[1] : Number(event.participantsList[0].longitude);
+    if (this.state.data) {
+      latitude = this.state.data[cardIndex].geometry.location.lat;
+      longitude = this.state.data[cardIndex].geometry.location.lng;
+    }
+    console.log('=====', latitude, longitude);
     return (
       <SafeAreaView style={styles.safeView}>
+  <Text> {this.state.cardIndex}</Text>
         <MapView style={styles.mapStyle}
-          // initialRegion={{
-          //   latitude: Number(event.participantsList[0].latitude),
-          //   longitude: Number(event.participantsList[0].longitude),
-          //   latitudeDelta: 0.1,
-          //   longitudeDelta: 0.1,
-          // }}
           region={{
             latitude: latitude,
             longitude: longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
+            latitudeDelta: 0.007,
+            longitudeDelta: 0.007,
           }}
         >
         {this.buildRecommandationMarkers()}
@@ -161,8 +182,9 @@ class Recommandation extends React.Component {
               <DeckSwiper
                 style={styles.DeckSwiper}
                 dataSource={this.state.data}
-                renderItem={(item) => this.buildCardForDeckSwiper(item)}
-                onSwipeRight={(item) => this.handleSwipeRight(item)}
+                renderItem={(item) => this.buildCardForDeckSwiper(this.state.data[cardIndex])}
+                onSwipeRight={ () => this.increaseCardIndex()}
+                onSwipeLeft={ () => this.decreaseCardIndex()}
                 >
               </DeckSwiper>
             </View>
